@@ -3,15 +3,6 @@ using MSE.Engine.Constants;
 
 namespace MSE.Engine.Utils {
   public class ObjWizard {
-    public Vector3[] V3Vertices => _v3Vertices;
-    public Vector2[] V2Uvs => _v2Uvs;
-    public Vector3[] V3Normals => _v3Normals;
-    
-    private Vector3[] _v3Vertices = { };
-    private Vector2[] _v2Uvs = { };
-    private Vector3[] _v3Normals = { };
-    
-    
     public float[] Vertices => _vertices;
     public uint[] Indices => _indices;
 
@@ -56,7 +47,7 @@ namespace MSE.Engine.Utils {
 #endif
         var sr = new StreamReader(_fileFullPath);
         ReadObjData(sr);
-        ProcessDataFloat();
+        ProcessData();
         ReleaseTempData();
         sr.Close();
 #if DEBUG
@@ -114,8 +105,8 @@ namespace MSE.Engine.Utils {
         line = sr.ReadLine();
       }
     }
-    
-    private void ProcessDataFloat() {
+
+    private void ProcessData() {
       for (var i = 0; i < _tempVerticesIndices.Count; i++) {
         int index = _tempVerticesIndices[i];
         Vector3 vertex = _originVertices[index - 1];
@@ -135,32 +126,6 @@ namespace MSE.Engine.Utils {
       }
 
       _vertices = _tempVertices.ToArray();
-      _indices = _tempIndices.ToArray();
-    }
-    
-    private void ProcessData() {
-      var tempVertices = new List<Vector3>();
-      var tempNormals = new List<Vector3>();
-      var tempUvs = new List<Vector2>();
-      for (var i = 0; i < _tempVerticesIndices.Count; i++) {
-        int index = _tempVerticesIndices[i];
-        Vector3 vertex = _originVertices[index - 1];
-        tempVertices.Add(vertex);
-
-        int indexNormals = _tempNormalIndices[i];
-        Vector3 normal = _originNormals[indexNormals - 1];
-        tempNormals.Add(normal);
-
-        int indexUvs = _tempUvIndices[i];
-        Vector2 uv = _originUvs[indexUvs - 1];
-        tempUvs.Add(uv);
-       
-        _tempIndices.Add((uint)i);
-      }
-      
-      _v3Vertices = tempVertices.ToArray();
-      _v2Uvs = tempUvs.ToArray();
-      _v3Normals = tempNormals.ToArray();
       _indices = _tempIndices.ToArray();
     }
 

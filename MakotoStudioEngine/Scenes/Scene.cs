@@ -36,7 +36,7 @@ namespace MSE.Engine.Scenes {
     }
 
     public void RenderScene(double deltaTime) {
-      _skyBox.Render();
+      _skyBox.Render(deltaTime);
 
       GameObjects().RenderGameObjects(deltaTime);
 

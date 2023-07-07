@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SAE.GPR5300.S1.Core;
+using SAE.GPR5300.S1.Settings;
 
 namespace SAE.GPR5300.S1;
 

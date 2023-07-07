@@ -20,24 +20,23 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
         return;
 
       SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox"));
-      var spheres = new ObjWizard("spheres.obj");
       _uiTest = new UITest();
-      var sun = new Sun(spheres);
+      var sun = new Sun();
       AddGameObject(sun);
 
-      var mercury = new Mercury(spheres);
+      var mercury = new Mercury();
       AddGameObject(mercury);
 
-      var venus = new Venus(spheres);
+      var venus = new Venus();
       AddGameObject(venus);
 
-      var earth = new Earth(spheres);
+      var earth = new Earth();
       AddGameObject(earth);
 
-      var moon = new Moon(earth, spheres);
+      var moon = new Moon(earth);
       AddGameObject(moon);
 
-      var mars = new Mars(spheres);
+      var mars = new Mars();
       AddGameObject(mars);
 
       AddUi(_uiTest);

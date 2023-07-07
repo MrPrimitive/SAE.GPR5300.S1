@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using MSE.Engine.GameObjects;
 using MSE.Engine.Utils;
+using SAE.GPR5300.S1.Core;
 using Silk.NET.OpenGL;
 using Texture = MSE.Engine.GameObjects.Texture;
 
@@ -10,11 +11,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects {
     private BufferObject<float> Vbo;
     private Vector3 LampPosition = new Vector3(1.2f, 1.0f, 2.0f);
 
-    public CubeGo(GL gl, Camera camera)
-      : base(gl) {
-      
+    public CubeGo()
+      : base(Game.Instance.Gl) {
       var objWizard = new ObjWizard("cube.obj");
-      Mesh = new Mesh(Gl, objWizard.V3Vertices, objWizard.V3Normals, objWizard.V2Uvs, objWizard.Indices);
+      Mesh = new Mesh(objWizard.Vertices, objWizard.Indices);
       Init();
     }
 

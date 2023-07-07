@@ -3,6 +3,7 @@ using MSE.Engine.Core;
 using MSE.Engine.GameObjects;
 using MSE.Engine.Interfaces;
 using SAE.GPR5300.S1.Assets.Scenes;
+using SAE.GPR5300.S1.Settings;
 using SAE.GPR5300.S1.Ui;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
@@ -29,8 +30,19 @@ namespace SAE.GPR5300.S1.Core {
     }
 
     public Game SetConfig(StartUpConfig startUpConfig) {
+      ScreenWith = startUpConfig.ScreenSize.ScreenWith;
+      ScreenHeight = startUpConfig.ScreenSize.ScreenHeight;
+
+      _windowOptions = _windowOptions with {
+        Size = new Vector2D<int>(ScreenWith, ScreenHeight),
+        WindowState = startUpConfig.WindowState,
+        WindowBorder = startUpConfig.WindowBorder,
+        Position = new Vector2D<int>(startUpConfig.Position.XPos, startUpConfig.Position.YPos)
+      };
+
       if (startUpConfig.FullScreen) {
         _windowOptions = _windowOptions with {
+          Position = new Vector2D<int>(0, 0),
           WindowState = WindowState.Fullscreen,
           WindowBorder = WindowBorder.Hidden,
         };
@@ -58,9 +70,10 @@ namespace SAE.GPR5300.S1.Core {
 
     private void OnLoad() {
       Gl = GameWindow.CreateOpenGL();
+      ScreenWith = GameWindow.Size.X;
+      ScreenHeight = GameWindow.Size.Y;
+      
       if (_isFullScreen) {
-        ScreenWith = GameWindow.Monitor.Bounds.Size.X;
-        ScreenHeight = GameWindow.Monitor.Bounds.Size.Y;
         Gl.Viewport(new Vector2D<int>(ScreenWith, ScreenHeight));
       }
 
@@ -73,12 +86,11 @@ namespace SAE.GPR5300.S1.Core {
 
       SceneManager.Instance.AddScene(mainScene);
       SceneManager.Instance.AddScene(solarSystemScene);
-      SceneManager.Instance.SetSceneActive("Main Scene");
+      SceneManager.Instance.SetSceneActive("Solar System Scene");
     }
 
     private void OnUpdate(double deltaTime) {
       Input.Instance.UpdateCamMove(deltaTime);
-
       SceneManager.Instance
         .GetActiveScene()
         .UpdateScene(deltaTime);
@@ -87,9 +99,7 @@ namespace SAE.GPR5300.S1.Core {
     private void OnRender(double deltaTime) {
       Gl.Enable(EnableCap.DepthTest);
       Gl.Clear((uint)(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit));
-
       UiController.Instance.ImGuiController.Update((float)deltaTime);
-
       SceneManager.Instance
         .GetActiveScene()
         .RenderScene(deltaTime);

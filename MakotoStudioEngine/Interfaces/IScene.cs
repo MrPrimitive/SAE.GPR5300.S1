@@ -1,5 +1,4 @@
 ﻿using MSE.Engine.GameObjects;
-using Silk.NET.OpenGL;
 
 namespace MSE.Engine.Interfaces {
   public interface IScene {

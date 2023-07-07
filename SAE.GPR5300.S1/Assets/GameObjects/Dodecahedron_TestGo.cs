@@ -19,15 +19,14 @@ namespace SAE.GPR5300.S1.Assets.GameObjects {
 
     public Dodecahedron_TestGo()
       : base(Game.Instance.Gl) {
-      _objWizard = new ObjWizard("spheres.obj");
-      Mesh = new Mesh(Gl, _objWizard.V3Vertices, _objWizard.V3Normals, _objWizard.V2Uvs, _objWizard.Indices);
+      _objWizard = new ObjWizard("dodecahedron.obj");
+      Mesh = new Mesh(_objWizard.Vertices, _objWizard.Indices);
       Init();
     }
 
     public override void Init() {
-      Mesh.Textures.Add(new Texture(Gl, "earth.png"));
-      Mesh.Textures.Add(new Texture(Gl, "earth.png"));
-
+      Mesh.Textures.Add(new Texture(Gl, "dodecahedron.jpg"));
+      Mesh.Textures.Add(new Texture(Gl, "dodecahedron.jpg"));
 
       Ebo = new BufferObject<uint>(Gl, _objWizard.Indices, BufferTargetARB.ElementArrayBuffer);
       Vbo = new BufferObject<float>(Gl, _objWizard.Vertices, BufferTargetARB.ArrayBuffer);
@@ -90,7 +89,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects {
       Material.SetUniform("light.specular", new Vector3(1.0f, 1.0f, 1.0f));
       Material.SetUniform("light.position", LampPosition);
 
-      Gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)_objWizard.Indices.Length);
+      Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
 
       Material2.Use();
 
@@ -104,7 +103,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects {
       Material2.SetUniform("uProjection", Camera.Instance.GetProjectionMatrix());
       Material2.SetUniform("fColor", new Vector3(1, 1, 1));
 
-      Gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)_objWizard.Indices.Length);
+      Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }
 }

@@ -1,23 +1,17 @@
-﻿using System.Numerics;
-using MSE.Engine.Core;
-using Silk.NET.OpenGL;
+﻿using MSE.Engine.Core;
 
 namespace MSE.Engine.GameObjects {
   public class Mesh : IDisposable {
-    public GL Gl { get; }
-    public Vector3[] Vertices { get; }
-    public Vector3[] Normals { get; }
-    public Vector2[] Uvs { get; }
+    public float[] Vertices { get; }
     public uint[] Indices { get; }
     public List<Texture> Textures { get; private set; } = new();
-    public VertexArrayObject VertexArrayObject { get; set; }
+    public VertexArrayObjectOld<float, uint> VertexArrayObject { get; set; }
+    public uint IndicesLength { get; }
 
-    public Mesh(GL gl, Vector3[] vertices, Vector3[] normals, Vector2[] uvs, uint[] indices) {
-      Gl = gl;
+    public Mesh(float[] vertices, uint[] indices) {
       Vertices = vertices;
-      Normals = normals;
-      Uvs = uvs;
       Indices = indices;
+      IndicesLength = (uint) Indices.Length;
     }
 
     public void Dispose() {
