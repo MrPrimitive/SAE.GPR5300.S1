@@ -1,12 +1,11 @@
 ﻿using System.Numerics;
-using MakotoStudioEngine.Core;
-using MakotoStudioEngine.Extensions;
-using MakotoStudioEngine.GameObjects;
-using MakotoStudioEngine.Utils;
+using MSE.Engine.Extensions;
+using MSE.Engine.GameObjects;
+using MSE.Engine.Utils;
 using Silk.NET.OpenGL;
-using Texture = MakotoStudioEngine.GameObjects.Texture;
+using Texture = MSE.Engine.GameObjects.Texture;
 
-namespace SAE.GPR5300.S1.Core {
+namespace MSE.Engine.Core {
   public class SkyBox {
     private BufferObject<uint> Ebo;
     private BufferObject<float> Vbo;
@@ -16,19 +15,19 @@ namespace SAE.GPR5300.S1.Core {
     private GL _gl;
     private int _textureId;
     private ObjWizard _objWizard;
-    private Camera _camera;
+    private string _textureName;
 
-    public SkyBox(GL gl, Camera camera) {
+    public SkyBox(GL gl, string textureName) {
+      _textureName = textureName;
       _gl = gl;
-      _camera = camera;
       Init();
     }
-    
+
     private void Init() {
       _objWizard = new ObjWizard("spheres.obj");
       // Material = new Material(_gl, "shaderSkyBox.vert", "shaderSkyBox.frag");
       Material = new Material(_gl, "shader.vert", "shader.frag");
-      _texture = new Texture(_gl, "skybox.jpg");
+      _texture = new Texture(_gl, $"{_textureName}.jpg");
       Ebo = new BufferObject<uint>(_gl, _objWizard.Indices, BufferTargetARB.ElementArrayBuffer);
       Vbo = new BufferObject<float>(_gl, _objWizard.Vertices, BufferTargetARB.ArrayBuffer);
       VaoCube = new VertexArrayObjectOld<float, uint>(_gl, Vbo, Ebo);
@@ -49,10 +48,10 @@ namespace SAE.GPR5300.S1.Core {
       var matrix = Matrix4x4.Identity;
       matrix *= Matrix4x4.CreateRotationX(180f.DegreesToRadians());
       matrix *= Matrix4x4.CreateScale(500f);
-      
+
       Material.SetUniform("uModel", matrix);
-      Material.SetUniform("uView", _camera.GetViewMatrix());
-      Material.SetUniform("uProjection", _camera.GetProjectionMatrix());
+      Material.SetUniform("uView", Camera.Instance.GetViewMatrix());
+      Material.SetUniform("uProjection", Camera.Instance.GetProjectionMatrix());
       Material.SetUniform("fColor", new Vector3(0.5f, 0.5f, 0.5f));
 
       _texture.Bind();

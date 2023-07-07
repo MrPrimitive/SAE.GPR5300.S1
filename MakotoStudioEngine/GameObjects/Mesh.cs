@@ -1,10 +1,8 @@
 ﻿using System.Numerics;
-using MakotoStudioEngine.Core;
-using MakotoStudioEngine.Interfaces;
-using MakotoStudioEngine.Utils;
+using MSE.Engine.Core;
 using Silk.NET.OpenGL;
 
-namespace MakotoStudioEngine.GameObjects {
+namespace MSE.Engine.GameObjects {
   public class Mesh : IDisposable {
     public GL Gl { get; }
     public Vector3[] Vertices { get; }

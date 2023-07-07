@@ -1,6 +1,6 @@
-﻿namespace MakotoStudioEngine.Interfaces {
+﻿namespace MSE.Engine.Interfaces {
   public interface IUiInterface {
-    public void Update();
-    public void Render();
+    public void UpdateUi();
+    public void RenderUi();
   }
 }

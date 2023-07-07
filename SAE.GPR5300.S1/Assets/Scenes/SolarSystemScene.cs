@@ -1,49 +1,52 @@
-﻿using MakotoStudioEngine.GameObjects;
-using MakotoStudioEngine.Scenes;
-using MakotoStudioEngine.Utils;
-using SAE.GPR5300.S1.Assets.GameObjects;
+﻿using MSE.Engine.Core;
+using MSE.Engine.Interfaces;
+using MSE.Engine.Scenes;
+using MSE.Engine.Utils;
 using SAE.GPR5300.S1.Assets.GameObjects.Planets;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
-using Silk.NET.OpenGL;
-using Silk.NET.OpenGL.Extensions.ImGui;
 
 namespace SAE.GPR5300.S1.Assets.Scenes {
-  public class SolarSystemScene : BaseScene {
-    private Camera _camera;
+  public class SolarSystemScene : Scene, IScene {
     private UITest _uiTest;
-    private ImGuiController _imGuiController;
+    private bool _instantiate;
 
-    public SolarSystemScene(GL gl,
-      string sceneName,
-      ImGuiController imGuiController,
-      Camera camera) : base(gl, sceneName) {
-      _camera = camera;
-      _imGuiController = imGuiController;
+    public SolarSystemScene(string sceneName) : base(sceneName) {
+      AddUi(UiSceneManager.Instance);
     }
 
-    public new void Init() {
+    public new void Load() {
+      if (_instantiate)
+        return;
+
+      SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox"));
       var spheres = new ObjWizard("spheres.obj");
-      _uiTest = new UITest(Gl(), _imGuiController);
-      var sun = new Sun(Gl(), _camera, spheres);
+      _uiTest = new UITest();
+      var sun = new Sun(spheres);
       AddGameObject(sun);
-      
-      var mercury = new Mercury(Gl(), _camera, spheres);
+
+      var mercury = new Mercury(spheres);
       AddGameObject(mercury);
-      
-      var venus = new Venus(Gl(), _camera, spheres);
+
+      var venus = new Venus(spheres);
       AddGameObject(venus);
 
-      var earth = new Earth(Gl(), _camera, spheres);
+      var earth = new Earth(spheres);
       AddGameObject(earth);
-      
-      var moon = new Moon(Gl(), _camera, earth, spheres);
+
+      var moon = new Moon(earth, spheres);
       AddGameObject(moon);
-      
-      var mars = new Mars(Gl(), _camera, spheres);
+
+      var mars = new Mars(spheres);
       AddGameObject(mars);
-      
+
       AddUi(_uiTest);
+
+      _instantiate = true;
+    }
+
+    public new void Unload() {
+      base.Unload();
     }
   }
 }

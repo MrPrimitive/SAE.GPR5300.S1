@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace MakotoStudioEngine.GameObjects {
+namespace MSE.Engine.GameObjects {
   public class Transform {
     public Vector3 Position { get; set; } = new(0, 0, 0);
     public float Scale { get; set; } = 1f;

@@ -1,10 +1,11 @@
 ﻿using System.Numerics;
-using MakotoStudioEngine.Core;
-using MakotoStudioEngine.Extensions;
-using MakotoStudioEngine.GameObjects;
-using MakotoStudioEngine.Utils;
+using MSE.Engine.Core;
+using MSE.Engine.Extensions;
+using MSE.Engine.GameObjects;
+using MSE.Engine.Utils;
+using SAE.GPR5300.S1.Core;
 using Silk.NET.OpenGL;
-using Texture = MakotoStudioEngine.GameObjects.Texture;
+using Texture = MSE.Engine.GameObjects.Texture;
 
 namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
   public class Sun : GameObject {
@@ -13,11 +14,12 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     private VertexArrayObjectOld<float, uint> VaoCube;
     private Vector3 LampPosition = new Vector3(0, 0, 0);
     private ObjWizard _objWizard;
-    private Camera _camera;
+    private float roatation = 0;
+    private float speed = 100;
+    private Matrix4x4 _matrix;
 
-    public Sun(GL gl, Camera camera, ObjWizard objWizard)
-      : base(gl) {
-      _camera = camera;
+    public Sun(ObjWizard objWizard)
+      : base(Game.Instance.Gl) {
       _objWizard = objWizard;
       Mesh = new Mesh(Gl, _objWizard.V3Vertices, _objWizard.V3Normals, _objWizard.V2Uvs, _objWizard.Indices);
       Init();
@@ -39,21 +41,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       Transform.Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 0, 1), 180f.DegreesToRadians());
     }
 
-    public override unsafe void Update(double deltaTime) {
-    }
-
-    private float roatation = 0;
-    private float speed = 100;
-
-    public override unsafe void Render(double deltaTime) {
-      VaoCube.Bind();
-      Material.Use();
-
-      var texture1 = Mesh.Textures[0];
-      texture1.Bind(TextureUnit.Texture0);
-
-      Material.Use();
-
+    public override unsafe void UpdateGameObject(double deltaTime) {
       roatation = +roatation + (speed * (float)deltaTime);
 
       if (roatation > 360) {
@@ -61,12 +49,20 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       }
 
       //Setup the coordinate systems for our view
-      var matrix = Transform.ViewMatrix;
-      matrix *= Matrix4x4.CreateRotationY(roatation.DegreesToRadians());
+      _matrix = Transform.ViewMatrix;
+      _matrix *= Matrix4x4.CreateRotationY(roatation.DegreesToRadians());
+    }
 
-      Material.SetUniform("uModel", matrix);
-      Material.SetUniform("uView", _camera.GetViewMatrix());
-      Material.SetUniform("uProjection", _camera.GetProjectionMatrix());
+    public override unsafe void RenderGameObject(double deltaTime) {
+      VaoCube.Bind();
+      Material.Use();
+
+      var texture1 = Mesh.Textures[0];
+      texture1.Bind(TextureUnit.Texture0);
+
+      Material.SetUniform("uModel", _matrix);
+      Material.SetUniform("uView", Camera.Instance.GetViewMatrix());
+      Material.SetUniform("uProjection", Camera.Instance.GetProjectionMatrix());
       Material.SetUniform("fColor", new Vector3(1, 1, 1));
 
       Gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)_objWizard.Indices.Length);

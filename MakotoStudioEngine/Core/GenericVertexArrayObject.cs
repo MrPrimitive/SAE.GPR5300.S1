@@ -1,8 +1,8 @@
-using MakotoStudioEngine.GameObjects;
-using MakotoStudioEngine.Interfaces;
+using MSE.Engine.GameObjects;
+using MSE.Engine.Interfaces;
 using Silk.NET.OpenGL;
 
-namespace MakotoStudioEngine.Core {
+namespace MSE.Engine.Core {
   public class GenericVertexArrayObject : IDisposable {
     #region Private Fields
 

@@ -1,13 +1,13 @@
-﻿using MakotoStudioEngine.Interfaces;
+﻿using MSE.Engine.Interfaces;
 
-namespace MakotoStudioEngine.Extensions {
+namespace MSE.Engine.Extensions {
   public static class UiExtension {
     public static void Render(this List<IUiInterface> uis) {
-      uis.ForEach(ui => ui.Render());
+      uis.ForEach(ui => ui.RenderUi());
     }
 
     public static void Update(this List<IUiInterface> uis) {
-      uis.ForEach(ui => ui.Update());
+      uis.ForEach(ui => ui.UpdateUi());
     }
   }
 }

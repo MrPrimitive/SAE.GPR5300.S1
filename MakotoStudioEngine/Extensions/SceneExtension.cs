@@ -1,9 +1,9 @@
-﻿using MakotoStudioEngine.Games;
+﻿using MSE.Engine.Interfaces;
 
-namespace MakotoStudioEngine.Extensions {
+namespace MSE.Engine.Extensions {
   public static class SceneExtension {
-    public static IBaseScene GetActiveScene(this List<IBaseScene> scenes) {
-      return scenes.Find(s => s.IsActiveScene());
-    }
+    // public static IScene GetActiveScene(this ISceneManager sceneManager) {
+      // return sceneManager..Find(s => s.IsActiveScene());
+    // }
   }
 }

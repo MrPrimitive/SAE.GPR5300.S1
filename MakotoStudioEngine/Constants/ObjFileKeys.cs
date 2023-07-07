@@ -1,5 +1,5 @@
-﻿namespace MakotoStudioEngine.Constants {
-  public class ObjFileKeys {
+﻿namespace MSE.Engine.Constants {
+  public static class ObjFileKeys {
     public const string CommandKey = "#";
     public const string MtlLibKey = "mtllib";
     public const string VertexKey = "v";

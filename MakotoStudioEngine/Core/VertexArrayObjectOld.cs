@@ -1,7 +1,7 @@
-﻿using MakotoStudioEngine.Utils;
+﻿using MSE.Engine.Utils;
 using Silk.NET.OpenGL;
 
-namespace MakotoStudioEngine.Core {
+namespace MSE.Engine.Core {
   public class VertexArrayObjectOld<TVertexType, TIndexType> : IDisposable
     where TVertexType : unmanaged
     where TIndexType : unmanaged {

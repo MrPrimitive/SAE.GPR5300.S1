@@ -1,6 +1,6 @@
 using Silk.NET.OpenGL;
 
-namespace MakotoStudioEngine.Utils
+namespace MSE.Engine.Utils
 {
     public class BufferObject<TDataType> : IDisposable
         where TDataType : unmanaged

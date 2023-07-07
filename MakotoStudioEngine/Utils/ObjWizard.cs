@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
-using MakotoStudioEngine.Constants;
+using MSE.Engine.Constants;
 
-namespace MakotoStudioEngine.Utils {
+namespace MSE.Engine.Utils {
   public class ObjWizard {
     public Vector3[] V3Vertices => _v3Vertices;
     public Vector2[] V2Uvs => _v2Uvs;

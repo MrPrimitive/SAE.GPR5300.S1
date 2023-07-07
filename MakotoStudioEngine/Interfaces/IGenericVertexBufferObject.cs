@@ -1,6 +1,6 @@
 ﻿using Silk.NET.OpenGL;
 
-namespace MakotoStudioEngine.Interfaces {
+namespace MSE.Engine.Interfaces {
   public interface IGenericVertexBufferObject : IDisposable {
     string Name { get; }
     VertexAttribPointerType PointerType { get; }

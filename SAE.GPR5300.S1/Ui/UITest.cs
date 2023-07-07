@@ -1,24 +1,16 @@
 ﻿using System.Numerics;
 using ImGuiNET;
-using MakotoStudioEngine.Interfaces;
-using Silk.NET.OpenGL;
-using Silk.NET.OpenGL.Extensions.ImGui;
+using MSE.Engine.Interfaces;
 
 namespace SAE.GPR5300.S1.Ui {
   public class UITest : IUiInterface {
-    private GL _gl;
-    private ImGuiController _controller;
-    
     private bool _isColor;
     private bool _isTexture;
     private float _alpha;
     private Vector3 _colorValue;
     private Vector3 _scaleValue;
 
-    public UITest(GL gl, ImGuiController imGuiController) {
-      _gl = gl;
-      _controller = imGuiController;
-    }
+    public UITest() { }
 
     public void LoadDemoWindow() {
       ImGui.ShowDemoWindow();
@@ -28,7 +20,7 @@ namespace SAE.GPR5300.S1.Ui {
       ImGui.ShowDebugLogWindow();
     }
 
-    public void Update() {
+    public void UpdateUi() {
       ImGui.Begin("UI Settings");
       ImGui.Text("Texture must be active for Texture blend with alpha chânnel");
       ImGui.Checkbox("Color", ref _isColor);
@@ -40,8 +32,8 @@ namespace SAE.GPR5300.S1.Ui {
       LoadDebugWindow();
     }
 
-    public void Render() {
-      _controller.Render();
+    public void RenderUi() {
+      UiController.Instance.ImGuiController.Render();
     }
   }
 }

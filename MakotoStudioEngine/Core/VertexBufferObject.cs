@@ -2,7 +2,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using Silk.NET.OpenGL;
 
-namespace MakotoStudioEngine.Core {
+namespace MSE.Engine.Core {
   public class VertexBufferObject<T> : IDisposable where T : unmanaged {
     public GL Gl { get; private set; }
     public uint ID { get; private set; }

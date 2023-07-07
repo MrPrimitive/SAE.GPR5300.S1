@@ -1,25 +1,27 @@
 ﻿using System.Numerics;
-using MakotoStudioEngine.GameObjects;
-using MakotoStudioEngine.Inputs;
+using MSE.Engine.GameObjects;
+using SAE.GPR5300.S1.Core;
 using Silk.NET.Input;
-using Silk.NET.Windowing;
 
 namespace SAE.GPR5300.S1.Ui {
-  public class Input : BaseInput {
-    public static IInputContext InputContext => _inputContext;
-    public static IKeyboard PrimaryKeyboard => _primaryKeyboard;
+  public class Input {
+    public static Input Instance => Lazy.Value;
+    public IInputContext InputContext => _inputContext;
+    public IKeyboard PrimaryKeyboard => _primaryKeyboard;
     public Vector2 LastMousePosition => _lastMousePosition;
 
+    private static readonly Lazy<Input> Lazy = new(() => new Input());
     private bool _insertMode;
     private Vector2 _lastMousePosition;
-    private Camera _camera;
+    private IInputContext _inputContext;
+    private IKeyboard _primaryKeyboard;
 
-    public Input(IWindow window, Camera camera)
-      : base(window) {
-      _camera = camera;
+    private Input() {
+      _inputContext = Game.Instance.GameWindow.CreateInput();
+      _primaryKeyboard = _inputContext.Keyboards.FirstOrDefault();
     }
 
-    public override void AddKeyBordBindings() {
+    public void AddKeyBordBindings() {
       if (_primaryKeyboard != null) {
         _primaryKeyboard.KeyDown += KeyDown;
       }
@@ -31,37 +33,38 @@ namespace SAE.GPR5300.S1.Ui {
       }
     }
 
-    public override void UpdateCamMove(double deltaTime) {
+    public void UpdateCamMove(double deltaTime) {
       if (_insertMode)
         return;
 
-      var moveSpeed = 20.5f * (float)deltaTime;
+      var moveSpeed = 10.5f * (float)deltaTime;
+      var multiplier = 1;
+      if (_primaryKeyboard.IsKeyPressed(Key.ShiftLeft)) {
+        multiplier = 4;
+      }
 
       if (_primaryKeyboard.IsKeyPressed(Key.W)) {
-        //Move forwards by adding a movement amount in the Camera's Front direction
-        _camera.Position += moveSpeed * _camera.Front;
+        Camera.Instance.Position += moveSpeed * multiplier * Camera.Instance.Front;
       }
 
       if (_primaryKeyboard.IsKeyPressed(Key.S)) {
-        //Move backwards by subtracting a movement amount in the Camera's Front direction
-        _camera.Position -= moveSpeed * _camera.Front;
+        Camera.Instance.Position -= moveSpeed * multiplier * Camera.Instance.Front;
       }
 
       if (_primaryKeyboard.IsKeyPressed(Key.A)) {
-        //Move left by subtracting movement from the 'Right' direction (calculated by 'crossing' the front and up directions)
-        _camera.Position -= Vector3.Normalize(Vector3.Cross(_camera.Front, _camera.Up)) * moveSpeed;
+        Camera.Instance.Position -= Vector3.Normalize(Vector3.Cross(Camera.Instance.Front, Camera.Instance.Up)) *
+                                    moveSpeed * multiplier;
       }
 
       if (_primaryKeyboard.IsKeyPressed(Key.D)) {
-        //Move right by adding movement in the 'Right' direction (calculated by 'crossing' the front and up directions)
-        _camera.Position += Vector3.Normalize(Vector3.Cross(_camera.Front, _camera.Up)) * moveSpeed;
+        Camera.Instance.Position += Vector3.Normalize(Vector3.Cross(Camera.Instance.Front, Camera.Instance.Up)) *
+                                    moveSpeed * multiplier;
       }
     }
 
     private void KeyDown(IKeyboard arg1, Key arg2, int arg3) {
-      //Check to close the window on escape.
       if (arg2 == Key.Escape) {
-        _window.Close();
+        Game.Instance.GameWindow.Close();
       }
       else if (arg2 == Key.I) {
         _insertMode = !_insertMode;
@@ -74,7 +77,7 @@ namespace SAE.GPR5300.S1.Ui {
       if (_insertMode)
         return;
 
-      var lookSensitivity = 0.1f;
+      const float lookSensitivity = 0.1f;
       if (_lastMousePosition == default) {
         _lastMousePosition = position;
       }
@@ -82,12 +85,14 @@ namespace SAE.GPR5300.S1.Ui {
         var xOffset = (position.X - _lastMousePosition.X) * lookSensitivity;
         var yOffset = (position.Y - _lastMousePosition.Y) * lookSensitivity;
         _lastMousePosition = position;
-        _camera.ModifyDirection(xOffset, yOffset);
+        Camera.Instance.ModifyDirection(xOffset, yOffset);
       }
     }
 
     private unsafe void OnMouseWheel(IMouse mouse, ScrollWheel scrollWheel) {
-      _camera.ModifyZoom(scrollWheel.Y);
+      if (_insertMode)
+        return;
+      Camera.Instance.ModifyZoom(scrollWheel.Y);
     }
   }
 }

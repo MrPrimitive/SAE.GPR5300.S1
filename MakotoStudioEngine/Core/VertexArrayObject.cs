@@ -1,8 +1,8 @@
-using MakotoStudioEngine.GameObjects;
-using MakotoStudioEngine.Interfaces;
+using MSE.Engine.GameObjects;
+using MSE.Engine.Interfaces;
 using Silk.NET.OpenGL;
 
-namespace MakotoStudioEngine.Core {
+namespace MSE.Engine.Core {
   public class VertexArrayObject : GenericVertexArrayObject {
     public VertexArrayObject(GL gl, Material program, IGenericVertexBufferObject[] vertexBufferObjects)
       : base(gl, program, false) {

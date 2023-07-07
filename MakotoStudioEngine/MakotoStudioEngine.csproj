@@ -5,6 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <RootNamespace>MSE.Engine</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +14,10 @@
       <PackageReference Include="Silk.NET.OpenGL" Version="2.17.1" />
       <PackageReference Include="Silk.NET.Windowing" Version="2.17.1" />
       <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Games\" />
     </ItemGroup>
 
 </Project>

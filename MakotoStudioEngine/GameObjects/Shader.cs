@@ -1,7 +1,7 @@
 using System.Numerics;
 using Silk.NET.OpenGL;
 
-namespace MakotoStudioEngine.GameObjects {
+namespace MSE.Engine.GameObjects {
   public class Shader : IDisposable {
     private uint _handle;
     private GL _gl;

@@ -1,10 +1,11 @@
 ﻿using System.Numerics;
-using MakotoStudioEngine.Core;
-using MakotoStudioEngine.Extensions;
-using MakotoStudioEngine.GameObjects;
-using MakotoStudioEngine.Utils;
+using MSE.Engine.Core;
+using MSE.Engine.Extensions;
+using MSE.Engine.GameObjects;
+using MSE.Engine.Utils;
+using SAE.GPR5300.S1.Core;
 using Silk.NET.OpenGL;
-using Texture = MakotoStudioEngine.GameObjects.Texture;
+using Texture = MSE.Engine.GameObjects.Texture;
 
 namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
   public class Moon : GameObject {
@@ -13,15 +14,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     private VertexArrayObjectOld<float, uint> VaoCube;
     private Vector3 LampPosition = new Vector3(0, 0, 0);
     private ObjWizard _objWizard;
-    private Camera _camera;
 
-    public Moon(GL gl,
-      Camera camera,
-      GameObject parent,
-      ObjWizard objWizard)
-      : base(gl) {
+    public Moon(GameObject parent, ObjWizard objWizard)
+      : base(Game.Instance.Gl) {
       _parent = parent;
-      _camera = camera;
       _objWizard = objWizard;
 
       Mesh = new Mesh(Gl, _objWizard.V3Vertices, _objWizard.V3Normals, _objWizard.V2Uvs, _objWizard.Indices);
@@ -49,24 +45,25 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
 
       Material = new Material(Gl, "shader.vert", "lighting.frag");
 
-     // Transform.Position = new Vector3(2,0,0);
+      // Transform.Position = new Vector3(2,0,0);
       Transform.Scale = 0.27f;
       // Transform.Scale = 4.27f;
       // Transform.Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 0, 1), 180f.DegreesToRadians());
     }
 
-    public override unsafe void Update(double deltaTime) {
+    public override unsafe void UpdateGameObject(double deltaTime) {
       roatation += speed * (float)deltaTime;
       if (roatation > 360) {
         roatation = 0;
       }
+
       roatationRound += speedRound * (float)deltaTime;
       if (roatationRound > 360) {
         roatationRound = 0;
       }
 
       Transform.Rotation = Transform.RotateY(roatation.DegreesToRadians());
-      Transform.Position = new Vector3(2,0,0);
+      Transform.Position = new Vector3(2, 0, 0);
 
       _matrix = Transform.ViewMatrix;
       _matrix *= _parent.Transform.ViewMatrix;
@@ -75,7 +72,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       _matrix *= Matrix4x4.CreateRotationY(roatationRound.DegreesToRadians());
     }
 
-    public override unsafe void Render(double deltaTime) {
+    public override unsafe void RenderGameObject(double deltaTime) {
       VaoCube.Bind();
       Material.Use();
 
@@ -85,10 +82,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       texture1.Bind(TextureUnit.Texture2);
 
       Material.SetUniform("uModel", _matrix);
-      Material.SetUniform("uView", _camera.GetViewMatrix());
-      Material.SetUniform("uProjection", _camera.GetProjectionMatrix());
+      Material.SetUniform("uView", Camera.Instance.GetViewMatrix());
+      Material.SetUniform("uProjection", Camera.Instance.GetProjectionMatrix());
       //Let the shaders know where the Camera is looking from
-      Material.SetUniform("viewPos", _camera.Position);
+      Material.SetUniform("viewPos", Camera.Instance.Position);
       //Configure the materials variables.
       //Diffuse is set to 0 because our diffuseMap is bound to Texture0
       Material.SetUniform("material.diffuse", 0);

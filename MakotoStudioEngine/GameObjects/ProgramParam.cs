@@ -1,7 +1,6 @@
-﻿using System.Numerics;
-using Silk.NET.OpenGL;
+﻿using Silk.NET.OpenGL;
 
-namespace MakotoStudioEngine.GameObjects {
+namespace MSE.Engine.GameObjects {
   public enum ParamType {
     Uniform,
     Attribute
