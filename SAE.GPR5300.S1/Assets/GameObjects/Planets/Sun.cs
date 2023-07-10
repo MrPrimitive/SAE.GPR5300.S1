@@ -21,10 +21,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     public Sun()
       : base(Game.Instance.Gl) {
       Mesh = new Mesh(Sphere.Instance.Mesh.Vertices, Sphere.Instance.Mesh.Indices);
-      Init();
+      OnLoad();
     }
 
-    public override void Init() {
+    public override void OnLoad() {
       Mesh.Textures.Add(new Texture(Gl, "sun.png"));
       Material = new Material(Gl, "shader.vert", "shader.frag");
 

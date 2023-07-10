@@ -19,7 +19,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       : base(Game.Instance.Gl) {
       _parent = parent;
       Mesh = new Mesh(Sphere.Instance.Mesh.Vertices, Sphere.Instance.Mesh.Indices);
-      Init();
+      OnLoad();
     }
 
     private float roatation = 0;
@@ -29,7 +29,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     private GameObject _parent;
     private Matrix4x4 _matrix;
 
-    public override void Init() {
+    public override void OnLoad() {
       Mesh.Textures.Add(new Texture(Gl, "moon.png"));
       Mesh.Textures.Add(new Texture(Gl, "moon.png"));
 

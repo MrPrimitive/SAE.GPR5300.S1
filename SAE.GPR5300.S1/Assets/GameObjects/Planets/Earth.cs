@@ -14,7 +14,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     private BufferObject<float> Vbo;
     private VertexArrayObjectOld<float, uint> VaoCube;
     private Vector3 LampPosition = new Vector3(0, 0, 0);
-    
+
     private float roatation = 0;
     private float roatationRound = 0;
     private float speed = 100;
@@ -23,8 +23,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
 
     public Earth()
       : base(Game.Instance.Gl) {
-      Mesh = new Mesh(Sphere.Instance.Mesh.Vertices, Sphere.Instance.Mesh.Indices);
-      Init();
+      OnLoad();
     }
 
     // Sun = = 20f
@@ -34,7 +33,8 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     // Moon =  = 0.27
     // Mars  =  = 0.53
 
-    public override void Init() {
+    public override void OnLoad() {
+      Mesh = new Mesh(Sphere.Instance.Mesh.Vertices, Sphere.Instance.Mesh.Indices);
       Mesh.Textures.Add(new Texture(Gl, "earth.png"));
       Mesh.Textures.Add(new Texture(Gl, "earth.png"));
 
@@ -76,7 +76,6 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
 
     public override unsafe void RenderGameObject(double deltaTime) {
       VaoCube.Bind();
-
       Material.Use();
 
       var texture1 = Mesh.Textures[0];

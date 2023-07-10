@@ -16,7 +16,7 @@ namespace SAE.GPR5300.S1.Core {
     public GL Gl { get; private set; } = null!;
 
     private static readonly Lazy<Game> Lazy = new(() => new Game());
-    private WindowOptions _windowOptions = WindowOptions.Default;
+    private readonly WindowOptions _windowOptions = WindowOptions.Default;
 
     private Game() {
       _windowOptions = _windowOptions with {
@@ -27,23 +27,9 @@ namespace SAE.GPR5300.S1.Core {
       };
       if (ProgramSetting.Instance.IsFullScreen) {
         _windowOptions = _windowOptions with {
-          Position = new Vector2D<int>(0, 0),
           WindowState = WindowState.Fullscreen,
           WindowBorder = WindowBorder.Hidden,
         };
-      }
-    }
-
-    public void SetFullScreen() {
-      if (ProgramSetting.Instance.IsFullScreen) {
-        GameWindow.WindowState = WindowState.Normal;
-        GameWindow.WindowBorder = WindowBorder.Resizable;
-        ProgramSetting.Instance.ProgramConfig.FullScreen = false;
-      }
-      else {
-        GameWindow.WindowState = WindowState.Fullscreen;
-        GameWindow.WindowBorder = WindowBorder.Hidden;
-        ProgramSetting.Instance.ProgramConfig.FullScreen = true;
       }
     }
 
@@ -61,12 +47,11 @@ namespace SAE.GPR5300.S1.Core {
     private void OnLoad() {
       Gl = GameWindow.CreateOpenGL();
       ProgramSetting.Instance.SetSize(GameWindow.Size.X, GameWindow.Size.Y);
-
+      
       if (ProgramSetting.Instance.IsFullScreen) {
         Gl.Viewport(ProgramSetting.Instance.GetScreenSize);
       }
-
-      // Gl.PolygonMode(TriangleFace.Front, PolygonMode.Fill);
+      
       Camera.Instance.SetUp(Vector3.UnitZ * 50,
         Vector3.UnitZ * -1,
         Vector3.UnitY,

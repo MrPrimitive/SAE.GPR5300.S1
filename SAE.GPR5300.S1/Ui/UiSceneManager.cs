@@ -35,8 +35,9 @@ namespace SAE.GPR5300.S1.Ui {
       ImGui.SetWindowSize("SceneManager", new Vector2(400, ProgramSetting.Instance.GetScreenSize.Y));
       ImGui.Text("Load different Scenes form here");
       if (ImGui.Button("Switch to Fullscreen")) {
-        Game.Instance.SetFullScreen();
+        ProgramSetting.Instance.SetFullScreen();
       }
+
       ImGui.End();
     }
 

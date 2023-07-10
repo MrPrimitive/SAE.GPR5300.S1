@@ -21,10 +21,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects {
       : base(Game.Instance.Gl) {
       _objWizard = new ObjWizard("dodecahedron.obj");
       Mesh = new Mesh(_objWizard.Vertices, _objWizard.Indices);
-      Init();
+      OnLoad();
     }
 
-    public override void Init() {
+    public override void OnLoad() {
       Mesh.Textures.Add(new Texture(Gl, "dodecahedron.jpg"));
       Mesh.Textures.Add(new Texture(Gl, "dodecahedron.jpg"));
 

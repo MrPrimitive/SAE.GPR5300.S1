@@ -14,10 +14,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects {
 
     public LightGo(GL gl, Texture texture)
       : base(gl) {
-      Init();
+      OnLoad();
     }
 
-    public override void Init() {
+    public override void OnLoad() {
       _objWizard = new ObjWizard("dodecahedron.obj");
       // Ebo = new BufferObject<uint>(Gl, _objWizard.Indices, BufferTargetARB.ElementArrayBuffer);
       // Vbo = new BufferObject<float>(Gl, _objWizard.Vertices, BufferTargetARB.ArrayBuffer);

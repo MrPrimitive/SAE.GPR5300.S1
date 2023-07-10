@@ -17,11 +17,11 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
 
     public Mars()
       : base(Game.Instance.Gl) {
-      Mesh = new Mesh(Sphere.Instance.Mesh.Vertices, Sphere.Instance.Mesh.Indices);
-      Init();
+      OnLoad();
     }
 
-    public override void Init() {
+    public override void OnLoad() {
+      Mesh = new Mesh(Sphere.Instance.Mesh.Vertices, Sphere.Instance.Mesh.Indices);
       Mesh.Textures.Add(new Texture(Gl, "mars.png"));
       Mesh.Textures.Add(new Texture(Gl, "mars.png"));
 
