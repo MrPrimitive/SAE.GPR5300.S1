@@ -14,42 +14,37 @@ namespace SAE.GPR5300.S1.Core {
     public static Game Instance => Lazy.Value;
     public IWindow GameWindow { get; private set; } = null!;
     public GL Gl { get; private set; } = null!;
-    public int ScreenWith { get; private set; } = WindowOptions.Default.Size.X;
-    public int ScreenHeight { get; private set; } = WindowOptions.Default.Size.Y;
 
     private static readonly Lazy<Game> Lazy = new(() => new Game());
     private WindowOptions _windowOptions = WindowOptions.Default;
-    private bool _isFullScreen;
 
     private Game() {
       _windowOptions = _windowOptions with {
+        Size = ProgramSetting.Instance.GetScreenSize,
         Title = "SAE GPR5300.S1 - MSE Engine",
-        WindowState = WindowState.Normal,
-        WindowBorder = WindowBorder.Resizable
+        WindowState = ProgramSetting.Instance.ProgramConfig.WindowState,
+        WindowBorder = ProgramSetting.Instance.ProgramConfig.WindowBorder,
       };
-    }
-
-    public Game SetConfig(StartUpConfig startUpConfig) {
-      ScreenWith = startUpConfig.ScreenSize.ScreenWith;
-      ScreenHeight = startUpConfig.ScreenSize.ScreenHeight;
-
-      _windowOptions = _windowOptions with {
-        Size = new Vector2D<int>(ScreenWith, ScreenHeight),
-        WindowState = startUpConfig.WindowState,
-        WindowBorder = startUpConfig.WindowBorder,
-        Position = new Vector2D<int>(startUpConfig.Position.XPos, startUpConfig.Position.YPos)
-      };
-
-      if (startUpConfig.FullScreen) {
+      if (ProgramSetting.Instance.IsFullScreen) {
         _windowOptions = _windowOptions with {
           Position = new Vector2D<int>(0, 0),
           WindowState = WindowState.Fullscreen,
           WindowBorder = WindowBorder.Hidden,
         };
-        _isFullScreen = true;
       }
+    }
 
-      return this;
+    public void SetFullScreen() {
+      if (ProgramSetting.Instance.IsFullScreen) {
+        GameWindow.WindowState = WindowState.Normal;
+        GameWindow.WindowBorder = WindowBorder.Resizable;
+        ProgramSetting.Instance.ProgramConfig.FullScreen = false;
+      }
+      else {
+        GameWindow.WindowState = WindowState.Fullscreen;
+        GameWindow.WindowBorder = WindowBorder.Hidden;
+        ProgramSetting.Instance.ProgramConfig.FullScreen = true;
+      }
     }
 
     public void Run() {
@@ -59,26 +54,23 @@ namespace SAE.GPR5300.S1.Core {
       GameWindow.Render += OnRender;
       GameWindow.Resize += OnResize;
       GameWindow.Closing += OnClose;
-
-      // Set Values
-
       GameWindow.Run();
       GameWindow.Dispose();
     }
 
-    #region SilkEvents
-
     private void OnLoad() {
       Gl = GameWindow.CreateOpenGL();
-      ScreenWith = GameWindow.Size.X;
-      ScreenHeight = GameWindow.Size.Y;
-      
-      if (_isFullScreen) {
-        Gl.Viewport(new Vector2D<int>(ScreenWith, ScreenHeight));
+      ProgramSetting.Instance.SetSize(GameWindow.Size.X, GameWindow.Size.Y);
+
+      if (ProgramSetting.Instance.IsFullScreen) {
+        Gl.Viewport(ProgramSetting.Instance.GetScreenSize);
       }
 
-      SetScreenSize(new Vector2D<int>(ScreenWith, ScreenHeight));
-      Camera.Instance.SetUp(Vector3.UnitZ * 50, Vector3.UnitZ * -1, Vector3.UnitY, (float)ScreenWith / ScreenHeight);
+      // Gl.PolygonMode(TriangleFace.Front, PolygonMode.Fill);
+      Camera.Instance.SetUp(Vector3.UnitZ * 50,
+        Vector3.UnitZ * -1,
+        Vector3.UnitY,
+        (float)ProgramSetting.Instance.GetScreenSize.X / ProgramSetting.Instance.GetScreenSize.Y);
       Input.Instance.AddKeyBordBindings();
 
       var mainScene = new MainScene("Main Scene");
@@ -98,6 +90,7 @@ namespace SAE.GPR5300.S1.Core {
 
     private void OnRender(double deltaTime) {
       Gl.Enable(EnableCap.DepthTest);
+      Gl.DepthMask(true);
       Gl.Clear((uint)(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit));
       UiController.Instance.ImGuiController.Update((float)deltaTime);
       SceneManager.Instance
@@ -108,18 +101,11 @@ namespace SAE.GPR5300.S1.Core {
     private void OnResize(Vector2D<int> size) {
       Camera.Instance.AspectRatio = (float)size.X / size.Y;
       Gl.Viewport(size);
-      Instance.SetScreenSize(size);
+      ProgramSetting.Instance.SetSize(size);
     }
 
     private void OnClose() {
       Gl.Dispose();
-    }
-
-    #endregion
-
-    private void SetScreenSize(Vector2D<int> size) {
-      ScreenWith = size.X;
-      ScreenHeight = size.Y;
     }
   }
 }

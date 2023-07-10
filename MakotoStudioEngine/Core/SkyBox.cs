@@ -49,7 +49,7 @@ namespace MSE.Engine.Core {
 
     public unsafe void Render(double deltaTime) {
       // draw skybox as last
-      _gl.DepthMask(false);
+      // _gl.DepthMask(false);
       _gl.Disable(EnableCap.DepthTest);
       
       VaoCube.Bind();
@@ -67,7 +67,7 @@ namespace MSE.Engine.Core {
       _gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)_objWizard.Indices.Length);
 
       _gl.Enable(EnableCap.DepthTest);
-      _gl.DepthMask(true); // set depth function back to default
+      // _gl.DepthMask(true); // set depth function back to default
     }
   }
 }

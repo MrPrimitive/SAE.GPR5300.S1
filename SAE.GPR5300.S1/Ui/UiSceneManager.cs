@@ -3,6 +3,7 @@ using ImGuiNET;
 using MSE.Engine.Core;
 using MSE.Engine.Interfaces;
 using SAE.GPR5300.S1.Core;
+using SAE.GPR5300.S1.Settings;
 using Silk.NET.OpenGL.Extensions.ImGui;
 
 namespace SAE.GPR5300.S1.Ui {
@@ -17,7 +18,7 @@ namespace SAE.GPR5300.S1.Ui {
     }
 
     public void UpdateUi() {
-      ImGui.SetNextWindowPos(new Vector2(Game.Instance.ScreenWith - 400, 0));
+      ImGui.SetNextWindowPos(new Vector2(ProgramSetting.Instance.GetScreenSize.X - 400, 0));
       ImGui.Begin("SceneManager");
       ImGui.Text($"Current Scene: {SceneManager.Instance.GetActiveScene().GetSceneName()}");
       ImGui.Text($"Available Scenes: {SceneManager.Instance.Scenes.Count}");
@@ -31,8 +32,11 @@ namespace SAE.GPR5300.S1.Ui {
         Game.Instance.GameWindow.Close();
       }
 
-      ImGui.SetWindowSize("SceneManager", new Vector2(400, Game.Instance.ScreenHeight));
+      ImGui.SetWindowSize("SceneManager", new Vector2(400, ProgramSetting.Instance.GetScreenSize.Y));
       ImGui.Text("Load different Scenes form here");
+      if (ImGui.Button("Switch to Fullscreen")) {
+        Game.Instance.SetFullScreen();
+      }
       ImGui.End();
     }
 

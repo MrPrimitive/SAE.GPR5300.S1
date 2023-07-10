@@ -2,7 +2,7 @@
 
 namespace SAE.GPR5300.S1.Settings;
 
-public class StartUpConfig {
+public class ProgramConfig {
   public bool FullScreen { get; set; } = false;
   public ScreenSize ScreenSize { get; set; } = new();
   public WindowState WindowState { get; set; } = WindowState.Normal;
