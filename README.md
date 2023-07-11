@@ -17,11 +17,18 @@ You can change the configuration in the ``appsettings.json`` file.
       "screenHeight": 720
     },
     "windowState": 0,
-    "windowBorder": 0,
-    "position": {
-      "xPos": 150,
-      "yPos": 150
-    }
+    "windowBorder": 0
   }
 }
+```
+
+### Solar System
+Planet size and config
+```
+Sun = = 20f
+Mercury =  = 0.38
+Venus  =  = 0.94
+Earth = 3'959 = 1
+Moon =  = 0.27
+Mars  =  = 0.53
 ```

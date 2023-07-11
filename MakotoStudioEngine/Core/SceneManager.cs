@@ -16,7 +16,7 @@ namespace MSE.Engine.Core {
       var scene = Scenes.Find(s => s.GetSceneName().Equals(sceneName));
       if (scene != null) {
         _activeScene = scene;
-        _activeScene.Load();
+        _activeScene.LoadScene();
         return;
       }
 
@@ -37,7 +37,7 @@ namespace MSE.Engine.Core {
       // TODO: Unload current active scene
       var currentScene = Instance.GetActiveScene();
 
-      scene.Load();
+      scene.LoadScene();
       Instance.SetSceneActive(scene.GetSceneName());
       currentScene.Unload();
     }

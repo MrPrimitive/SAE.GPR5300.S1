@@ -3,16 +3,15 @@ using MSE.Engine.Core;
 using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
 using MSE.Engine.Utils;
+using SAE.GPR5300.S1.Assets.Materials;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Core;
+using SAE.GPR5300.S1.Utils;
 using Silk.NET.OpenGL;
 using Texture = MSE.Engine.GameObjects.Texture;
 
 namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
   public class Sun : GameObject {
-    private BufferObject<uint> Ebo;
-    private BufferObject<float> Vbo;
-    private VertexArrayObjectOld<float, uint> VaoCube;
     private Vector3 LampPosition = new Vector3(0, 0, 0);
     private float roatation = 0;
     private float speed = 100;
@@ -20,29 +19,19 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
 
     public Sun()
       : base(Game.Instance.Gl) {
-      Mesh = new Mesh(Sphere.Instance.Mesh.Vertices, Sphere.Instance.Mesh.Indices);
+      Mesh = new Mesh(Game.Instance.Gl, Sphere.Instance.Mesh.Vertices, Sphere.Instance.Mesh.Indices);
+      Mesh.Textures.Add(new Texture(Gl, "sun.png"));
+      Material = StandardMaterial.Instance.Material;
       OnLoad();
     }
 
     public override void OnLoad() {
-      Mesh.Textures.Add(new Texture(Gl, "sun.png"));
-      Material = new Material(Gl, "shader.vert", "shader.frag");
-
-      Ebo = new BufferObject<uint>(Gl, Mesh.Indices, BufferTargetARB.ElementArrayBuffer);
-      Vbo = new BufferObject<float>(Gl, Mesh.Vertices, BufferTargetARB.ArrayBuffer);
-      VaoCube = new VertexArrayObjectOld<float, uint>(Gl, Vbo, Ebo);
-
-      VaoCube.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 8, 0);
-      VaoCube.VertexAttributePointer(1, 3, VertexAttribPointerType.Float, 8, 3);
-      VaoCube.VertexAttributePointer(2, 2, VertexAttribPointerType.Float, 8, 6);
-
       Transform.Scale = 5f;
       Transform.Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 0, 1), 180f.DegreesToRadians());
     }
 
     public override unsafe void UpdateGameObject(double deltaTime) {
-      roatation = +roatation + (speed * (float)deltaTime);
-
+      roatation += roatation + (speed * (float)deltaTime);
       if (roatation > 360) {
         roatation = 0;
       }
@@ -53,17 +42,9 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     }
 
     public override unsafe void RenderGameObject(double deltaTime) {
-      VaoCube.Bind();
+      Mesh.Bind();
       Material.Use();
-
-      var texture1 = Mesh.Textures[0];
-      texture1.Bind(TextureUnit.Texture0);
-
-      Material.SetUniform("uModel", _matrix);
-      Material.SetUniform("uView", Camera.Instance.GetViewMatrix());
-      Material.SetUniform("uProjection", Camera.Instance.GetProjectionMatrix());
-      Material.SetUniform("fColor", new Vector3(1, 1, 1));
-
+      StandardShaderUtil.SetModelPosition(Material, _matrix);
       Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }

@@ -3,6 +3,7 @@ using MSE.Engine.Core;
 using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
 using MSE.Engine.Utils;
+using SAE.GPR5300.S1.Assets.Materials;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Core;
 using Silk.NET.OpenGL;
@@ -18,6 +19,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     public Venus()
       : base(Game.Instance.Gl) {
       Mesh = new Mesh(Sphere.Instance.Mesh.Vertices, Sphere.Instance.Mesh.Indices);
+      Material = LightingMaterial.Instance.Material;
       OnLoad();
     }
 
@@ -32,9 +34,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       VaoCube.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 8, 0);
       VaoCube.VertexAttributePointer(1, 3, VertexAttribPointerType.Float, 8, 3);
       VaoCube.VertexAttributePointer(2, 2, VertexAttribPointerType.Float, 8, 6);
-
-      Material = new Material(Gl, "shader.vert", "lighting.frag");
-
+      
       Transform.Position = new Vector3(30, 0, 0);
       Transform.Scale = 0.94f;
     }

@@ -15,8 +15,8 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
       AddUi(UiSceneManager.Instance);
     }
 
-    public new void Load() {
-      base.Load();
+    public new void LoadScene() {
+      base.LoadScene();
       if (_instantiate)
         return;
 

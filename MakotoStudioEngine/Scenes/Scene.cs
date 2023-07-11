@@ -21,7 +21,7 @@ namespace MSE.Engine.Scenes {
       _sceneName = sceneName;
     }
 
-    public void Load() {
+    public void LoadScene() {
     }
 
     public void Unload() {

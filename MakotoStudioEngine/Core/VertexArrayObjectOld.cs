@@ -10,7 +10,6 @@ namespace MSE.Engine.Core {
 
     public VertexArrayObjectOld(GL gl, BufferObject<TVertexType> vbo, BufferObject<TIndexType> ebo) {
       _gl = gl;
-
       _handle = _gl.GenVertexArray();
       Bind();
       vbo.Bind();
