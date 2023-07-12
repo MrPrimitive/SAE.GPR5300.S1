@@ -18,7 +18,7 @@ namespace MSE.Engine.Core {
     private Texture _texture;
     private GL _gl;
     private int _textureId;
-    private ObjWizard _objWizard;
+    private ObjConverter _objConverter;
     private string _textureName;
     private Matrix4x4 _matrix;
 
@@ -29,12 +29,12 @@ namespace MSE.Engine.Core {
     }
 
     private void Init() {
-      _objWizard = new ObjWizard("spheres.obj");
+      _objConverter = new ObjConverter("spheres.obj");
       // Material = new Material(_gl, "shaderSkyBox.vert", "shaderSkyBox.frag");
       Material = new Material(_gl, "shader.vert", "shader.frag");
       _texture = new Texture(_gl, $"{_textureName}.jpg");
-      Ebo = new BufferObject<uint>(_gl, _objWizard.Indices, BufferTargetARB.ElementArrayBuffer);
-      Vbo = new BufferObject<float>(_gl, _objWizard.Vertices, BufferTargetARB.ArrayBuffer);
+      Ebo = new BufferObject<uint>(_gl, _objConverter.Indices, BufferTargetARB.ElementArrayBuffer);
+      Vbo = new BufferObject<float>(_gl, _objConverter.Vertices, BufferTargetARB.ArrayBuffer);
       VaoCube = new VertexArrayObjectOld<float, uint>(_gl, Vbo, Ebo);
 
       VaoCube.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 8, 0);
@@ -64,7 +64,7 @@ namespace MSE.Engine.Core {
       Material.SetUniform("fColor", new Vector3(0.5f, 0.5f, 0.5f));
 
       _texture.Bind();
-      _gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)_objWizard.Indices.Length);
+      _gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)_objConverter.Indices.Length);
 
       _gl.Enable(EnableCap.DepthTest);
       // _gl.DepthMask(true); // set depth function back to default

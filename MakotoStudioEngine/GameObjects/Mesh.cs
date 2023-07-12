@@ -12,12 +12,6 @@ namespace MSE.Engine.GameObjects {
     private BufferObject<uint> Ebo;
     private BufferObject<float> Vbo;
 
-    public Mesh(float[] vertices, uint[] indices) {
-      Vertices = vertices;
-      Indices = indices;
-      IndicesLength = (uint)Indices.Length;
-    }
-
     public Mesh(GL gl, float[] vertices, uint[] indices) {
       Vertices = vertices;
       Indices = indices;

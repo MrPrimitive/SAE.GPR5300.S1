@@ -38,14 +38,14 @@ namespace MSE.Engine.Scenes {
     public void RenderScene() {
       _skyBox.Render();
 
-      GameObjects().RenderGameObjects(deltaTime);
+      GameObjects().RenderGameObjects();
 
       Uis().Update();
       Uis().Render();
     }
 
     public void UpdateScene() {
-      GameObjects().UpdateGameObjects(deltaTime);
+      GameObjects().UpdateGameObjects();
     }
   }
 }

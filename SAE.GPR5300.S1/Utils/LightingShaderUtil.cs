@@ -4,7 +4,7 @@ using SAE.GPR5300.S1.Assets.Materials;
 
 namespace SAE.GPR5300.S1.Utils {
   public static class LightingShaderUtil {
-    public static void SetModelPosition(Material material,
+    public static void SetShaderValues(Material material,
       Matrix4x4 matrix,
       ShaderMaterialOptions shaderMaterialOptions,
       ShaderLightOptions shaderLightOptions) {

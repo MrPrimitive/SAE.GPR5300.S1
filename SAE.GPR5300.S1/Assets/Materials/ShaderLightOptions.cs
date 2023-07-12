@@ -20,8 +20,9 @@ public struct ShaderLightOptions {
 
   static ShaderLightOptions() {
     Default = new ShaderLightOptions(
-      new Vector3(1.0f) * new Vector3(0.1f),
-      new Vector3(1.0f), new Vector3(1.0f),
+      new Vector3(1.0f),
+      new Vector3(1.7f) * new Vector3(0.1f),
+      new Vector3(1.7f),
       new Vector3(1.0f));
   }
 

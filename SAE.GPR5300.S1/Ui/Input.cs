@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using MSE.Engine.Core;
 using MSE.Engine.GameObjects;
 using SAE.GPR5300.S1.Core;
 using Silk.NET.Input;
@@ -33,11 +34,11 @@ namespace SAE.GPR5300.S1.Ui {
       }
     }
 
-    public void UpdateCamMove(double deltaTime) {
+    public void UpdateCamMove() {
       if (_insertMode)
         return;
 
-      var moveSpeed = 10.5f * (float)deltaTime;
+      var moveSpeed = 10.5f * Time.DeltaTime;
       var multiplier = 1;
       if (_primaryKeyboard.IsKeyPressed(Key.ShiftLeft)) {
         multiplier = 4;

@@ -8,7 +8,6 @@ using SAE.GPR5300.S1.Ui;
 
 namespace SAE.GPR5300.S1.Assets.Scenes {
   public class SolarSystemScene : Scene, IScene {
-    private UITest _uiTest;
     private bool _instantiate;
 
     public SolarSystemScene(string sceneName) : base(sceneName) {
@@ -20,7 +19,7 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
         return;
 
       SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox"));
-      _uiTest = new UITest();
+
       var sun = new Sun();
       AddGameObject(sun);
 
@@ -39,7 +38,11 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
       var mars = new Mars();
       AddGameObject(mars);
 
-      AddUi(_uiTest);
+      var uiTest = new UITest();
+      AddUi(uiTest);
+
+      var uiSolarSystemSetting = new UiSolarSystemSetting(this);
+      AddUi(uiSolarSystemSetting);
 
       _instantiate = true;
     }

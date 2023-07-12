@@ -21,10 +21,6 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
         return;
 
       SetSkyBox(new SkyBox(Game.Instance.Gl, "anime_sky"));
-      _uiScene = new UiScene(this);
-      var dodecahedron = new Dodecahedron_TestGo();
-      AddGameObject(dodecahedron);
-      AddUi(_uiScene);
 
       _instantiate = true;
     }

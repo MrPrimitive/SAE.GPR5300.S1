@@ -2,7 +2,7 @@
 using MSE.Engine.Constants;
 
 namespace MSE.Engine.Utils {
-  public class ObjWizard {
+  public class ObjConverter {
     public float[] Vertices => _vertices;
     public uint[] Indices => _indices;
 
@@ -32,7 +32,7 @@ namespace MSE.Engine.Utils {
     /// 
     /// </summary>
     /// <param name="path">File path</param>
-    public ObjWizard(string path) {
+    public ObjConverter(string path) {
       _fileFullPath = FileLoaderPath + path;
       Load();
     }

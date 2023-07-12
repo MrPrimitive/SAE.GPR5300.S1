@@ -71,13 +71,13 @@ namespace SAE.GPR5300.S1.Core {
     private void OnUpdate(double deltaTime) {
       // Create Time Class wih own delta time 
       _time.UpdateDeltaTime(deltaTime);
-      Input.Instance.UpdateCamMove(deltaTime);
+      Input.Instance.UpdateCamMove();
       SceneManager.Instance
         .GetActiveScene()
-        .UpdateScene(deltaTime);
+        .UpdateScene();
     }
 
-    private void OnRender() {
+    private void OnRender(double deltaTime) {
       Gl.Enable(EnableCap.DepthTest);
       Gl.DepthMask(true);
       Gl.Clear((uint)(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit));
