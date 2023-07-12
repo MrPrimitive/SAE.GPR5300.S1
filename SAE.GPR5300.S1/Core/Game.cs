@@ -17,8 +17,10 @@ namespace SAE.GPR5300.S1.Core {
 
     private static readonly Lazy<Game> Lazy = new(() => new Game());
     private readonly WindowOptions _windowOptions = WindowOptions.Default;
+    private Time _time;
 
     private Game() {
+      _time = new Time();
       _windowOptions = _windowOptions with {
         Size = ProgramSetting.Instance.GetScreenSize,
         Title = "SAE GPR5300.S1 - MSE Engine",
@@ -47,11 +49,11 @@ namespace SAE.GPR5300.S1.Core {
     private void OnLoad() {
       Gl = GameWindow.CreateOpenGL();
       ProgramSetting.Instance.SetSize(GameWindow.Size.X, GameWindow.Size.Y);
-      
+
       if (ProgramSetting.Instance.IsFullScreen) {
         Gl.Viewport(ProgramSetting.Instance.GetScreenSize);
       }
-      
+
       Camera.Instance.SetUp(Vector3.UnitZ * 50,
         Vector3.UnitZ * -1,
         Vector3.UnitY,
@@ -67,20 +69,22 @@ namespace SAE.GPR5300.S1.Core {
     }
 
     private void OnUpdate(double deltaTime) {
+      // Create Time Class wih own delta time 
+      _time.UpdateDeltaTime(deltaTime);
       Input.Instance.UpdateCamMove(deltaTime);
       SceneManager.Instance
         .GetActiveScene()
         .UpdateScene(deltaTime);
     }
 
-    private void OnRender(double deltaTime) {
+    private void OnRender() {
       Gl.Enable(EnableCap.DepthTest);
       Gl.DepthMask(true);
       Gl.Clear((uint)(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit));
-      UiController.Instance.ImGuiController.Update((float)deltaTime);
+      UiController.Instance.ImGuiController.Update(Time.DeltaTime);
       SceneManager.Instance
         .GetActiveScene()
-        .RenderScene(deltaTime);
+        .RenderScene();
     }
 
     private void OnResize(Vector2D<int> size) {

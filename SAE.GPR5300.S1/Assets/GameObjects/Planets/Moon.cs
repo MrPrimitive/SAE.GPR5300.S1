@@ -50,7 +50,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       // Transform.Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 0, 1), 180f.DegreesToRadians());
     }
 
-    public override unsafe void UpdateGameObject(double deltaTime) {
+    public override unsafe void UpdateGameObject() {
       roatation += speed * (float)deltaTime;
       if (roatation > 360) {
         roatation = 0;
@@ -71,7 +71,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       _matrix *= Matrix4x4.CreateRotationY(roatationRound.DegreesToRadians());
     }
 
-    public override unsafe void RenderGameObject(double deltaTime) {
+    public override unsafe void RenderGameObject() {
       VaoCube.Bind();
       Material.Use();
 

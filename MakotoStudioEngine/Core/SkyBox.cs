@@ -44,10 +44,10 @@ namespace MSE.Engine.Core {
       
     }
 
-    public unsafe void Update(double deltaTime) {
+    public unsafe void Update() {
     }
 
-    public unsafe void Render(double deltaTime) {
+    public unsafe void Render() {
       // draw skybox as last
       // _gl.DepthMask(false);
       _gl.Disable(EnableCap.DepthTest);

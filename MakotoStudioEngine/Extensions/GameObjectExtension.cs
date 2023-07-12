@@ -8,12 +8,12 @@ namespace MSE.Engine.Extensions {
       return go;
     }
 
-    public static void RenderGameObjects(this List<IGameObject> gos, double deltaTime) {
-      gos.ForEach(go => go.RenderGameObject(deltaTime));
+    public static void RenderGameObjects(this List<IGameObject> gos) {
+      gos.ForEach(go => go.RenderGameObject());
     }
 
-    public static void UpdateGameObjects(this List<IGameObject> gos, double deltaTime) {
-      gos.ForEach(go => go.UpdateGameObject(deltaTime));
+    public static void UpdateGameObjects(this List<IGameObject> gos) {
+      gos.ForEach(go => go.UpdateGameObject());
     }
   }
 }

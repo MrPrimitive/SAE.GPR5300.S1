@@ -12,10 +12,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
   public class Earth : GameObject {
     private Vector3 LampPosition = new Vector3(0, 0, 0);
 
-    private float roatation = 0;
-    private float roatationRound = 0;
-    private float speed = 100;
-    private float speedRound = 20;
+    private float _rotationDegrees = 0;
+    private float _rotationRoundDegrees = 0;
+    private float _speed = 100;
+    private float _speedRound = 20;
     private Matrix4x4 _matrix;
     private ShaderMaterialOptions _shaderMaterialOptions = ShaderMaterialOptions.Defualt;
     private ShaderLightOptions _shaderLightOptions = ShaderLightOptions.Default;
@@ -36,25 +36,18 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       // Transform.Rotation *= Transform.RotateX(90f.DegreesToRadians());
     }
 
-    public override unsafe void UpdateGameObject(double deltaTime) {
-      roatation += speed * (float)deltaTime;
-      if (roatation > 360) {
-        roatation = 0;
-      }
-
-      roatationRound += speedRound * (float)deltaTime;
-      if (roatationRound > 360) {
-        roatationRound = 0;
-      }
+    public override unsafe void UpdateGameObject() {
+      _rotationDegrees = _rotationDegrees.Rotation360(_speed);
+      _rotationRoundDegrees = _rotationRoundDegrees.Rotation360(_speedRound);
 
       Transform.Rotation = Transform.RotateZ(180f.DegreesToRadians());
-      Transform.Rotation *= Transform.RotateY(roatation.DegreesToRadians());
+      Transform.Rotation *= Transform.RotateY(_rotationDegrees.DegreesToRadians());
       _matrix = Transform.ViewMatrix;
       // around the sun
-      _matrix *= Matrix4x4.CreateRotationY(roatationRound.DegreesToRadians());
+      _matrix *= Matrix4x4.CreateRotationY(_rotationRoundDegrees.DegreesToRadians());
     }
 
-    public override unsafe void RenderGameObject(double deltaTime) {
+    public override unsafe void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
       LightingShaderUtil.SetModelPosition(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);

@@ -15,8 +15,8 @@ namespace MSE.Engine.GameObjects {
     }
 
     public abstract void OnLoad();
-    public abstract unsafe void UpdateGameObject(double deltaTime);
+    public abstract unsafe void UpdateGameObject();
 
-    public abstract unsafe void RenderGameObject(double deltaTime);
+    public abstract unsafe void RenderGameObject();
   }
 }

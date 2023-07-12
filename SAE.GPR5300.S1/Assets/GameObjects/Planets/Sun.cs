@@ -31,12 +31,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     }
 
     public override unsafe void UpdateGameObject(double deltaTime) {
-      roatation += roatation + (speed * (float)deltaTime);
-      if (roatation > 360) {
-        roatation = 0;
-      }
-
-      //Setup the coordinate systems for our view
+      roatation = roatation.Rotation360(speed);
       _matrix = Transform.ViewMatrix;
       _matrix *= Matrix4x4.CreateRotationY(roatation.DegreesToRadians());
     }

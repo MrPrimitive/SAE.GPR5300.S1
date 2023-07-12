@@ -50,10 +50,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects {
       // Vao.VertexAttributePointer(2, 2, VertexAttribPointerType.Float, 8, 6);
     }
 
-    public override unsafe void UpdateGameObject(double deltaTime) {
+    public override unsafe void UpdateGameObject() {
     }
 
-    public override unsafe void RenderGameObject(double deltaTime) {
+    public override unsafe void RenderGameObject() {
       // Ebo = new BufferObject<uint>(Gl, _objWizard.Indices, BufferTargetARB.ElementArrayBuffer);
       // Vbo = new BufferObject<float>(Gl, _objWizard.Vertices, BufferTargetARB.ArrayBuffer);
       // Vao = new VertexArrayObject<float, uint>(Gl, Vbo, Ebo);

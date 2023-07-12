@@ -46,7 +46,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     private float speedRound = 125;
     private Matrix4x4 _matrix;
 
-    public override unsafe void UpdateGameObject(double deltaTime) {
+    public override unsafe void UpdateGameObject() {
       roatation += speed * (float)deltaTime;
       if (roatation > 360) {
         roatation = 0;
@@ -62,7 +62,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       _matrix *= Matrix4x4.CreateRotationY(roatationRound.DegreesToRadians());
     }
 
-    public override unsafe void RenderGameObject(double deltaTime) {
+    public override unsafe void RenderGameObject() {
       VaoCube.Bind();
       Material.Use();
 

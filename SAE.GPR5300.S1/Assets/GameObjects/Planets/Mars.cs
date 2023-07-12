@@ -38,13 +38,13 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       Transform.Scale = 0.53f;
     }
 
-    public override unsafe void UpdateGameObject(double deltaTime) {
-      roatation += speed * (float)deltaTime;
+    public override unsafe void UpdateGameObject() {
+      roatation += speed * Time.DeltaTime;
       if (roatation > 360) {
         roatation = 0;
       }
 
-      roatationRound += speedRound * (float)deltaTime;
+      roatationRound += speedRound * Time.DeltaTime;
       if (roatationRound > 360) {
         roatationRound = 0;
       }
@@ -53,7 +53,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       _matrix *= Matrix4x4.CreateRotationY(roatationRound.DegreesToRadians());
     }
 
-    public override unsafe void RenderGameObject(double deltaTime) {
+    public override unsafe void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
       LightingShaderUtil.SetModelPosition(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);
