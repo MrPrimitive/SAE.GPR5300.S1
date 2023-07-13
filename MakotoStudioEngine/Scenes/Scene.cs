@@ -36,7 +36,8 @@ namespace MSE.Engine.Scenes {
     }
 
     public void RenderScene() {
-      _skyBox.Render();
+      if (_skyBox != null)
+        _skyBox.Render();
 
       GameObjects().RenderGameObjects();
 

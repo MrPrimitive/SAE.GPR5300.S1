@@ -1,8 +1,9 @@
 ﻿using System.Numerics;
 using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
-using SAE.GPR5300.S1.Assets.Materials;
 using SAE.GPR5300.S1.Assets.Models;
+using SAE.GPR5300.S1.Assets.Shaders.Materials;
+using SAE.GPR5300.S1.Assets.Shaders.Options;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 using SAE.GPR5300.S1.Utils;

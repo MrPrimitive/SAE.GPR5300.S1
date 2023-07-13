@@ -9,31 +9,27 @@ using SAE.GPR5300.S1.Utils;
 using Silk.NET.OpenGL;
 using Texture = MSE.Engine.GameObjects.Texture;
 
-namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
-  public class Sun : GameObject {
+namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
+  public class DemoSun : GameObject {
     private Matrix4x4 _matrix;
-    private const float Speed = 100;
+    private const float Speed = 10;
+    private float _rotationMultiplier = 1;
     private float _rotationDegrees;
-    private float _solarSystemMultiplier = 1;
 
-    public Sun()
-      : base(Game.Instance.Gl) {
+    public DemoSun() : base(Game.Instance.Gl) {
       Mesh = new Mesh(Game.Instance.Gl, Sphere.Instance.Vertices, Sphere.Instance.Indices);
-      Mesh.Textures.Add(new Texture(Gl, "sun.png"));
       Material = StandardMaterial.Instance.Material;
-      UiSolarSystemSetting.SolarSystemMultiplierEvent += multiplier => _solarSystemMultiplier = multiplier;
       OnLoad();
     }
 
     public override void OnLoad() {
-      Transform.Scale = 5f;
-      Transform.Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 0, 1), 180f.DegreesToRadians());
+      Mesh.Textures.Add(new Texture(Gl, "sun.png"));
+      Transform.Position = new Vector3(4f);
+      Transform.Scale = 0.5f;
     }
 
     public override unsafe void UpdateGameObject() {
-      _rotationDegrees = _rotationDegrees.Rotation360(_solarSystemMultiplier * Speed);
       _matrix = Transform.ViewMatrix;
-      _matrix *= Matrix4x4.CreateRotationY(_rotationDegrees.DegreesToRadians());
     }
 
     public override unsafe void RenderGameObject() {

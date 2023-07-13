@@ -61,11 +61,17 @@ namespace SAE.GPR5300.S1.Core {
       Input.Instance.AddKeyBordBindings();
 
       var mainScene = new MainScene("Main Scene");
-      var solarSystemScene = new SolarSystemScene("Solar System Scene");
-
       SceneManager.Instance.AddScene(mainScene);
+      
+      var solarSystemScene = new SolarSystemScene("Solar System Scene");
       SceneManager.Instance.AddScene(solarSystemScene);
-      SceneManager.Instance.SetSceneActive("Solar System Scene");
+
+      var p8Scene = new P8Scene("P8 - Scene");
+      SceneManager.Instance.AddScene(p8Scene);
+      
+      // SceneManager.Instance.SetSceneActive("Solar System Scene");
+      // SceneManager.Instance.SetSceneActive("Main Scene");
+      SceneManager.Instance.SetSceneActive("P8 - Scene");
     }
 
     private void OnUpdate(double deltaTime) {

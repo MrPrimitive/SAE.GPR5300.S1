@@ -12,15 +12,17 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
     private bool _instantiate;
 
     public MainScene(string sceneName) : base(sceneName) {
-      AddUi(UiSceneManager.Instance);
+      
     }
 
     public new void LoadScene() {
       base.LoadScene();
       if (_instantiate)
         return;
-
-      SetSkyBox(new SkyBox(Game.Instance.Gl, "anime_sky"));
+      
+      AddUi(new UITest());
+      
+      
 
       _instantiate = true;
     }

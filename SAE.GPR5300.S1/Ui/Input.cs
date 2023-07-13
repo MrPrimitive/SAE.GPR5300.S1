@@ -12,7 +12,7 @@ namespace SAE.GPR5300.S1.Ui {
     public Vector2 LastMousePosition => _lastMousePosition;
 
     private static readonly Lazy<Input> Lazy = new(() => new Input());
-    private bool _insertMode;
+    private bool _insertMode = true;
     private Vector2 _lastMousePosition;
     private IInputContext _inputContext;
     private IKeyboard _primaryKeyboard;
@@ -28,7 +28,7 @@ namespace SAE.GPR5300.S1.Ui {
       }
 
       for (int i = 0; i < _inputContext.Mice.Count; i++) {
-        _inputContext.Mice[i].Cursor.CursorMode = CursorMode.Raw;
+        _inputContext.Mice[i].Cursor.CursorMode = CursorMode.Normal;
         _inputContext.Mice[i].MouseMove += OnMouseMove;
         _inputContext.Mice[i].Scroll += OnMouseWheel;
       }

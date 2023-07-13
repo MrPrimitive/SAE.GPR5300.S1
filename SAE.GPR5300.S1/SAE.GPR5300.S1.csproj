@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+    
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
@@ -7,23 +7,23 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
-
+    
     <ItemGroup>
         <ProjectReference Include="..\MakotoStudioEngine\MakotoStudioEngine.csproj" />
     </ItemGroup>
-
+    
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
         <PackageReference Include="Silk.NET.OpenGL.Extensions.ImGui" Version="2.17.1" />
     </ItemGroup>
-
+    
     <ItemGroup>
         <ShadersSourceFiles Include="Resources/Shaders/**/*.*" />
         <TexturesSourceFiles Include="Resources/Textures/**/*.*" />
         <ModelsSourceFiles Include="Resources/Models/**/*.*" />
     </ItemGroup>
-
+    
     <ItemGroup>
       <Folder Include="Resources\Textures\Mars\" />
       <Folder Include="Resources\Textures\Mercury\" />
@@ -31,12 +31,11 @@
       <Folder Include="Resources\Textures\Venus\" />
     </ItemGroup>
     
-
     <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
         <Copy SourceFiles="appsettings.json" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
         <Copy SourceFiles="@(ShadersSourceFiles)" DestinationFolder="$(OutDir)\shaders" SkipUnchangedFiles="true" />
         <Copy SourceFiles="@(TexturesSourceFiles)" DestinationFolder="$(OutDir)\textures" SkipUnchangedFiles="true" />
         <Copy SourceFiles="@(ModelsSourceFiles)" DestinationFolder="$(OutDir)\models" SkipUnchangedFiles="true" />
     </Target>
-
+    
 </Project>

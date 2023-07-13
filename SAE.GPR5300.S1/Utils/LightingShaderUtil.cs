@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 using MSE.Engine.GameObjects;
-using SAE.GPR5300.S1.Assets.Materials;
+using SAE.GPR5300.S1.Assets.Shaders.Options;
 
 namespace SAE.GPR5300.S1.Utils {
   public static class LightingShaderUtil {
@@ -15,10 +15,10 @@ namespace SAE.GPR5300.S1.Utils {
       material.SetUniform("material.diffuse", shaderMaterialOptions.Diffuse);
       material.SetUniform("material.specular", shaderMaterialOptions.Specular);
       material.SetUniform("material.shininess", shaderMaterialOptions.Shininess);
-      material.SetUniform("light.ambient", shaderLightOptions.Ambient); // ambientColor);
-      material.SetUniform("light.diffuse", shaderLightOptions.Diffuse); // diffuseColor); // darkened
-      material.SetUniform("light.specular", shaderLightOptions.Specular); //new Vector3(1.0f, 1.0f, 1.0f));
-      material.SetUniform("light.position", shaderLightOptions.Position); // LampPosition);
+      material.SetUniform("light.ambient", shaderLightOptions.Ambient);
+      material.SetUniform("light.diffuse", shaderLightOptions.Diffuse);
+      material.SetUniform("light.specular", shaderLightOptions.Specular);
+      material.SetUniform("light.position", shaderLightOptions.Position);
     }
   }
 }

@@ -15,9 +15,10 @@ namespace SAE.GPR5300.S1.Ui {
 
     public void UpdateUi() {
       ImGui.Begin("Solar System Settings");
-      if (ImGui.SliderFloat("Speed Multpliaktor", ref _solarSystemMultiplier, 0.0f, 1.0f)) {
+      if (ImGui.SliderFloat("Speed Multiplier", ref _solarSystemMultiplier, 0.0f, 5.0f)) {
         SolarSystemMultiplierEvent.Invoke(_solarSystemMultiplier);
       }
+      
 
       if (ImGui.Button("Reset")) {
         _solarSystemMultiplier = 1f;

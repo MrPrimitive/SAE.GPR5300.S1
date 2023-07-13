@@ -19,6 +19,7 @@ namespace SAE.GPR5300.S1.Ui {
 
     public void UpdateUi() {
       ImGui.SetNextWindowPos(new Vector2(ProgramSetting.Instance.GetScreenSize.X - 400, 0));
+
       ImGui.Begin("SceneManager");
       ImGui.Text($"Current Scene: {SceneManager.Instance.GetActiveScene().GetSceneName()}");
       ImGui.Text($"Available Scenes: {SceneManager.Instance.Scenes.Count}");

@@ -1,4 +1,4 @@
-﻿namespace SAE.GPR5300.S1.Assets.Materials;
+﻿namespace SAE.GPR5300.S1.Assets.Shaders.Options;
 
 public struct ShaderMaterialOptions {
   public int Diffuse { get; set; }

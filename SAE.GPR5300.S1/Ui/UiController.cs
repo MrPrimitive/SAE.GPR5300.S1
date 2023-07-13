@@ -1,4 +1,5 @@
-﻿using SAE.GPR5300.S1.Core;
+﻿using ImGuiNET;
+using SAE.GPR5300.S1.Core;
 using Silk.NET.OpenGL.Extensions.ImGui;
 
 namespace SAE.GPR5300.S1.Ui {
@@ -13,6 +14,7 @@ namespace SAE.GPR5300.S1.Ui {
         Game.Instance.Gl, 
         Game.Instance.GameWindow, 
         Input.Instance.InputContext);
+      ImGui.GetIO().ConfigFlags |= ImGuiConfigFlags.DockingEnable;
     }
   }
 }

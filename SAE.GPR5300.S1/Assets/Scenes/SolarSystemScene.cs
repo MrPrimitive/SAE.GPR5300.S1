@@ -3,6 +3,8 @@ using MSE.Engine.Interfaces;
 using MSE.Engine.Scenes;
 using MSE.Engine.Utils;
 using SAE.GPR5300.S1.Assets.GameObjects.Planets;
+using SAE.GPR5300.S1.Assets.Models;
+using SAE.GPR5300.S1.Assets.Shaders.Materials;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 
@@ -18,7 +20,7 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
       if (_instantiate)
         return;
 
-      SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox"));
+      SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox", StandardMaterial.Instance.Material, Sphere.Instance));
 
       var sun = new Sun();
       AddGameObject(sun);
@@ -37,9 +39,6 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
 
       var mars = new Mars();
       AddGameObject(mars);
-
-      var uiTest = new UITest();
-      AddUi(uiTest);
 
       var uiSolarSystemSetting = new UiSolarSystemSetting(this);
       AddUi(uiSolarSystemSetting);
