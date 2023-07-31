@@ -9,15 +9,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Silk.NET.GLFW" Version="2.17.1" />
-      <PackageReference Include="Silk.NET.Input" Version="2.17.1" />
-      <PackageReference Include="Silk.NET.OpenGL" Version="2.17.1" />
-      <PackageReference Include="Silk.NET.Windowing" Version="2.17.1" />
-      <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
+        <PackageReference Include="Silk.NET.GLFW" Version="2.17.1" />
+        <PackageReference Include="Silk.NET.Input" Version="2.17.1" />
+        <PackageReference Include="Silk.NET.OpenGL" Version="2.17.1" />
+        <PackageReference Include="Silk.NET.Windowing" Version="2.17.1" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Games\" />
-    </ItemGroup>
-
+    
+    <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+        <Copy SourceFiles="@(ModelsSourceFiles)" DestinationFolder="$(OutDir)\models" SkipUnchangedFiles="true" />
+    </Target>
 </Project>

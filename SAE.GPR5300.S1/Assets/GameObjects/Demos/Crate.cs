@@ -11,7 +11,7 @@ using Silk.NET.OpenGL;
 using Texture = MSE.Engine.GameObjects.Texture;
 
 namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
-  public class P8DemoCube : GameObject {
+  public class Crate : GameObject {
     private ShaderMaterialOptions _shaderMaterialOptions = ShaderMaterialOptions.Defualt;
     private ShaderLightOptions _shaderLightOptions = ShaderLightOptions.Default;
     private Matrix4x4 _matrix;
@@ -20,30 +20,35 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     private float _rotationDegrees;
     private Vector3 _color = new(0,0,0);
 
-    public P8DemoCube() : base(Game.Instance.Gl) {
+    public Crate() : base(Game.Instance.Gl) {
       Mesh = new Mesh(Game.Instance.Gl, CubeModel.Instance.Vertices, CubeModel.Instance.Indices);
-      Material = P8DemoLightingMaterial.Instance.Material;
-      UiP8Scene.ColorEvent += color => _color = color;
-
-      UiP8Scene.ShaderMaterialOptionsEvent += shaderMaterialOptions => _shaderMaterialOptions = shaderMaterialOptions;
-      UiP8Scene.ShaderLightOptionsEvent += shaderLightOptions => _shaderLightOptions = shaderLightOptions;
+      Material = LightingMaterial.Instance.Material;
+      Transform.Scale = 9f;
+      Transform.Position = new Vector3(-10f, -10f, 0f);
       OnLoad();
       
     }
 
     public override void OnLoad() {
       Mesh.Textures.Add(new Texture(Gl, "crate.jpg"));
+      // Mesh.Textures.Add(new Texture(Gl, "silkBoxed.png"));
+      // Mesh.Textures.Add(new Texture(Gl, "silkSpecular.png"));
       _shaderLightOptions = _shaderLightOptions with {
         Position = new Vector3(4f)
       };
     }
 
     public override unsafe void UpdateGameObject() {
-      // _shaderMaterialOptions = _shaderMaterialOptions with {
-      // };
       _rotationDegrees = _rotationDegrees.Rotation360(_rotationMultiplier * Speed);
       Transform.Rotation = Transform.RotateZ(_rotationDegrees.DegreesToRadians());
       Transform.Rotation *= Transform.RotateY(_rotationDegrees.DegreesToRadians());
+
+      _shaderLightOptions = _shaderLightOptions with {
+        Position = new Vector3(0f),
+        Ambient = new Vector3(0.2f) * new Vector3(0.1f),
+        Diffuse = new Vector3(0.5f),
+        Specular = new Vector3(0.1f)
+      };
 
       _matrix = Transform.ViewMatrix;
     }
@@ -51,21 +56,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     public override unsafe void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
-      Material.SetUniform("uModel", _matrix);
-      Material.SetUniform("uView", Camera.Instance.GetViewMatrix());
-      Material.SetUniform("uProjection", Camera.Instance.GetProjectionMatrix());
-      Material.SetUniform("viewPos", Camera.Instance.Position);
-      Material.SetUniform("material.diffuse", _shaderMaterialOptions.Diffuse);
-      Material.SetUniform("material.specular", _shaderMaterialOptions.Specular);
-      Material.SetUniform("material.shininess", _shaderMaterialOptions.Shininess);
-      Material.SetUniform("light.ambient", _shaderLightOptions.Ambient);
-      Material.SetUniform("light.diffuse", _shaderLightOptions.Diffuse);
-      Material.SetUniform("light.specular", _shaderLightOptions.Specular);
-      Material.SetUniform("light.position", _shaderLightOptions.Position);
-      
-      Material.SetUniform("color", _color);
-
-
+      LightingShaderUtil.SetShaderValues(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);
       Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }

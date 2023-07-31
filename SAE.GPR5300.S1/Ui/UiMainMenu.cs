@@ -7,36 +7,28 @@ using SAE.GPR5300.S1.Settings;
 using Silk.NET.OpenGL.Extensions.ImGui;
 
 namespace SAE.GPR5300.S1.Ui {
-  public class UiSceneManager : IUiSceneManager {
+  public class UiMainMenu : IUiSceneManager {
     private ImGuiController _controller;
 
-    public static UiSceneManager Instance => Lazy.Value;
-    private static readonly Lazy<UiSceneManager> Lazy = new(() => new UiSceneManager());
+    public static UiMainMenu Instance => Lazy.Value;
+    private static readonly Lazy<UiMainMenu> Lazy = new(() => new UiMainMenu());
 
-    public UiSceneManager() {
+    public UiMainMenu() {
       _controller = UiController.Instance.ImGuiController;
     }
 
     public void UpdateUi() {
-      ImGui.SetNextWindowPos(new Vector2(ProgramSetting.Instance.GetScreenSize.X - 400, 0));
-
-      ImGui.Begin("SceneManager");
-      ImGui.Text($"Current Scene: {SceneManager.Instance.GetActiveScene().GetSceneName()}");
+      ImGui.SetNextWindowPos(new Vector2(
+        ProgramSetting.Instance.GetScreenSize.X / 2 - 200,
+        ProgramSetting.Instance.GetScreenSize.Y / 2 - 150));
+      ImGui.SetNextWindowSize(new Vector2(400, 300));
+      ImGui.Begin("Mein Menu", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoTitleBar);
       ImGui.Text($"Available Scenes: {SceneManager.Instance.Scenes.Count}");
       foreach (var scene in SceneManager.Instance.Scenes
+                 .Where(scene => !scene.GetSceneName().Equals(SceneName.MainMenu))
                  .Where(scene => !SceneManager.Instance.GetActiveScene().GetSceneName().Equals(scene.GetSceneName()))
                  .Where(scene => ImGui.Button($"{scene.GetSceneName()}", new Vector2(385, 50)))) {
         SceneManager.Instance.LoadScene(scene);
-      }
-
-      if (ImGui.Button($"CLOSE GAME", new Vector2(385, 50))) {
-        Game.Instance.GameWindow.Close();
-      }
-
-      ImGui.SetWindowSize("SceneManager", new Vector2(400, ProgramSetting.Instance.GetScreenSize.Y));
-      ImGui.Text("Load different Scenes form here");
-      if (ImGui.Button("Switch to Fullscreen")) {
-        ProgramSetting.Instance.SetFullScreen();
       }
 
       ImGui.End();

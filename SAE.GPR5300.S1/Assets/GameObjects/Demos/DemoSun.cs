@@ -17,14 +17,14 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     private float _rotationDegrees;
 
     public DemoSun() : base(Game.Instance.Gl) {
-      Mesh = new Mesh(Game.Instance.Gl, Sphere.Instance.Vertices, Sphere.Instance.Indices);
+      Mesh = new Mesh(Game.Instance.Gl, SphereModel.Instance.Vertices, SphereModel.Instance.Indices);
       Material = StandardMaterial.Instance.Material;
       OnLoad();
     }
 
     public override void OnLoad() {
       Mesh.Textures.Add(new Texture(Gl, "sun.png"));
-      Transform.Position = new Vector3(4f);
+      Transform.Position = new Vector3(0f);
       Transform.Scale = 0.5f;
     }
 

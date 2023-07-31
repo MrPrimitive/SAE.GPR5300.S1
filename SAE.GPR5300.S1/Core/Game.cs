@@ -12,10 +12,10 @@ using Silk.NET.Windowing;
 namespace SAE.GPR5300.S1.Core {
   public class Game : IGame {
     public static Game Instance => Lazy.Value;
+    private static readonly Lazy<Game> Lazy = new(() => new Game());
     public IWindow GameWindow { get; private set; } = null!;
     public GL Gl { get; private set; } = null!;
 
-    private static readonly Lazy<Game> Lazy = new(() => new Game());
     private readonly WindowOptions _windowOptions = WindowOptions.Default;
     private Time _time;
 
@@ -58,20 +58,25 @@ namespace SAE.GPR5300.S1.Core {
         Vector3.UnitZ * -1,
         Vector3.UnitY,
         (float)ProgramSetting.Instance.GetScreenSize.X / ProgramSetting.Instance.GetScreenSize.Y);
+
       Input.Instance.AddKeyBordBindings();
 
-      var mainScene = new MainScene("Main Scene");
-      SceneManager.Instance.AddScene(mainScene);
-      
-      var solarSystemScene = new SolarSystemScene("Solar System Scene");
-      SceneManager.Instance.AddScene(solarSystemScene);
+      AddAllScene();
+      ActivateScene();
+    }
 
-      var p8Scene = new P8Scene("P8 - Scene");
-      SceneManager.Instance.AddScene(p8Scene);
-      
-      // SceneManager.Instance.SetSceneActive("Solar System Scene");
-      // SceneManager.Instance.SetSceneActive("Main Scene");
-      SceneManager.Instance.SetSceneActive("P8 - Scene");
+    private void ActivateScene() {
+      SceneManager.Instance.SetSceneActive(SceneName.MainMenu);
+    }
+
+    private void AddAllScene() {
+      SceneManager.Instance.AddScene(new TestScene(SceneName.Test));
+      SceneManager.Instance.AddScene(new MainMenuScene(SceneName.MainMenu));
+      SceneManager.Instance.AddScene(new SolarSystemScene(SceneName.SolarSystem));
+      SceneManager.Instance.AddScene(new ReflectionScene(SceneName.Reflection));
+      SceneManager.Instance.AddScene(new P8Scene(SceneName.P8));
+      SceneManager.Instance.AddScene(new P9Scene(SceneName.P9));
+      SceneManager.Instance.AddScene(new BlinnPhongLightingScene(SceneName.BlinnPhongLighting));
     }
 
     private void OnUpdate(double deltaTime) {

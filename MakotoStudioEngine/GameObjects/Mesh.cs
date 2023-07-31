@@ -30,6 +30,9 @@ namespace MSE.Engine.GameObjects {
         Textures[i].Bind(TextureUnit.Texture0 + i);
       }
     }
+    public void BindVAO() {
+      VertexArrayObject.Bind();
+    }
 
     public void Dispose() {
       Textures = null;

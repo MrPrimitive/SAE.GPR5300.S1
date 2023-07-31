@@ -18,7 +18,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
 
     public Sun()
       : base(Game.Instance.Gl) {
-      Mesh = new Mesh(Game.Instance.Gl, Sphere.Instance.Vertices, Sphere.Instance.Indices);
+      Mesh = new Mesh(Game.Instance.Gl, SphereModel.Instance.Vertices, SphereModel.Instance.Indices);
       Mesh.Textures.Add(new Texture(Gl, "sun.png"));
       Material = StandardMaterial.Instance.Material;
       UiSolarSystemSetting.SolarSystemMultiplierEvent += multiplier => _solarSystemMultiplier = multiplier;

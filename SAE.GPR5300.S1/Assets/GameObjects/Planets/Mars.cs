@@ -26,7 +26,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
 
     public Mars()
       : base(Game.Instance.Gl) {
-      Mesh = new Mesh(Game.Instance.Gl, Sphere.Instance.Vertices, Sphere.Instance.Indices);
+      Mesh = new Mesh(Game.Instance.Gl, SphereModel.Instance.Vertices, SphereModel.Instance.Indices);
       Material = LightingMaterial.Instance.Material;
       UiSolarSystemSetting.SolarSystemMultiplierEvent += multiplier => _solarSystemMultiplier = multiplier;
       OnLoad();

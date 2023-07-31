@@ -59,6 +59,7 @@ namespace MSE.Engine.GameObjects {
 
     public Matrix4x4 GetProjectionMatrix() {
       return Matrix4x4.CreatePerspectiveFieldOfView(Zoom.DegreesToRadians(), AspectRatio, 0.1f, 1000.0f);
+      // return Matrix4x4.CreateOrthographic(280, 280, 0.1f, 1000f);
     }
   }
 }

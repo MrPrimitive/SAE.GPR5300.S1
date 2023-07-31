@@ -8,23 +8,22 @@ using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 
 namespace SAE.GPR5300.S1.Assets.Scenes {
-  public class P8Scene : Scene, IScene {
+  public class ReflectionScene : Scene, IScene {
     private SkyBox _skyBox;
     private bool _instantiate;
 
-    public P8Scene(string sceneName) : base(sceneName) {
+    public ReflectionScene(string sceneName) : base(sceneName) {
     }
 
     public new void LoadScene() {
       if (_instantiate)
         return;
       
-      SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox", StandardMaterial.Instance.Material, SkyBoxModel.Instance));
+      SetSkyBox(new SkyCubeBox(Game.Instance.Gl, SkyCubeBoxMaterial.Instance.Material, CubeModel.Instance));
 
-      AddGameObject(new P8DemoCube());
-      AddGameObject(new DemoSun());
+      AddGameObject(new ReflectionCrate());
+      // AddGameObject(new DemoSun());
       
-      AddUi(new UiP8Scene());
       AddUi(new UiSceneManager());
 
       _instantiate = true;

@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using ImGuiNET;
 using MSE.Engine.Interfaces;
+using SAE.GPR5300.S1.Assets.Shaders.Options;
 
 namespace SAE.GPR5300.S1.Ui {
   public class UiP8Scene : IUiInterface {
@@ -17,13 +18,19 @@ namespace SAE.GPR5300.S1.Ui {
       }
     }
 
+    public static Action<ShaderMaterialOptions> ShaderMaterialOptionsEvent;
+    public static Action<ShaderLightOptions> ShaderLightOptionsEvent;
     public static Action<Vector3> ColorEvent;
+    private ShaderMaterialOptions _shaderMaterialOptions = ShaderMaterialOptions.Defualt;
+    private ShaderLightOptions _shaderLightOptions = ShaderLightOptions.Default;
 
     public UiP8Scene() {
       Color = HsvToRgb();
     }
 
     public Vector2 _buttonSize = new(300, 20);
+    private bool _materialSettingCheckBox = false;
+    private bool _materialLightCheckBox = false;
 
     public void UpdateUi() {
       ImGui.SetNextWindowPos(new Vector2(0, 0));
@@ -39,6 +46,51 @@ namespace SAE.GPR5300.S1.Ui {
       if (ImGui.SliderFloat("Saturation", ref _saturation, 0, 1))
         Color = HsvToRgb();
 
+
+      ImGui.ColorButton("Color", Color, ImGuiColorEditFlags.None, new Vector2(100, 100));
+
+      ImGui.End();
+
+      ImGui.Begin("Material Setting");
+      var materialDiffuse = _shaderMaterialOptions.Diffuse;
+      if (ImGui.SliderInt("Material Diffuse", v: ref materialDiffuse, Int32.MinValue, Int32.MaxValue))
+        _shaderMaterialOptions.Diffuse = materialDiffuse;
+
+      var materialSpecular = _shaderMaterialOptions.Specular;
+      if (ImGui.SliderInt("Material Specular", ref materialSpecular, Int32.MinValue, Int32.MaxValue))
+        _shaderMaterialOptions.Specular = materialSpecular;
+
+      var materialShininess = _shaderMaterialOptions.Shininess;
+      if (ImGui.SliderFloat("Material Shininess", ref materialShininess, Single.MinValue, Single.MaxValue))
+        _shaderMaterialOptions.Shininess = materialShininess;
+
+      ImGui.Checkbox("Use values", ref _materialSettingCheckBox);
+      if (_materialSettingCheckBox)
+        ShaderMaterialOptionsEvent.Invoke(_shaderMaterialOptions);
+
+
+      ImGui.End();
+
+      ImGui.Begin("Light Setting");
+
+      var lightDiffuse = _shaderLightOptions.Diffuse;
+      if (ImGui.ColorEdit3("Light Diffuse", ref lightDiffuse))
+        _shaderLightOptions.Diffuse = lightDiffuse;
+
+      var lightAmbient = _shaderLightOptions.Ambient;
+      if (ImGui.ColorEdit3("Light Ambient", ref lightAmbient))
+        _shaderLightOptions.Ambient = lightAmbient;
+
+      var lightPosition = _shaderLightOptions.Position;
+      if (ImGui.DragFloat3("Light Position", ref lightPosition))
+        _shaderLightOptions.Position = lightPosition;
+
+      var lightSpecular = _shaderLightOptions.Specular;
+      if (ImGui.DragFloat3("Light Specular", ref lightSpecular))
+        _shaderLightOptions.Specular = lightSpecular;
+      ImGui.Checkbox("Use values", ref _materialLightCheckBox);
+      if (_materialLightCheckBox)
+        ShaderLightOptionsEvent.Invoke(_shaderLightOptions);
 
       ImGui.ColorButton("Color", Color, ImGuiColorEditFlags.None, new Vector2(100, 100));
 
