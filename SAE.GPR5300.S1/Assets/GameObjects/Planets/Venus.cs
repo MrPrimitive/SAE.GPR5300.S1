@@ -39,15 +39,14 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       Transform.Scale = 0.94f;
     }
 
-    public override unsafe void UpdateGameObject() {
+    public override void UpdateGameObject() {
       _rotationDegrees = _rotationDegrees.Rotation360(_solarSystemMultiplier * Speed);
       _rotationSolarSystemDegrees = _rotationSolarSystemDegrees.Rotation360(_solarSystemMultiplier * SolarSystemSpeed);
-
       _matrix = Transform.ViewMatrix;
       _matrix *= Matrix4x4.CreateRotationY(_rotationSolarSystemDegrees.DegreesToRadians());
     }
 
-    public override unsafe void RenderGameObject() {
+    public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
       LightingShaderUtil.SetShaderValues(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);

@@ -12,9 +12,9 @@ using Silk.NET.Windowing;
 namespace SAE.GPR5300.S1.Core {
   public class Game : IGame {
     public static Game Instance => Lazy.Value;
-    private static readonly Lazy<Game> Lazy = new(() => new Game());
     public IWindow GameWindow { get; private set; } = null!;
     public GL Gl { get; private set; } = null!;
+    private static readonly Lazy<Game> Lazy = new(() => new Game());
 
     private readonly WindowOptions _windowOptions = WindowOptions.Default;
     private Time _time;
@@ -80,7 +80,6 @@ namespace SAE.GPR5300.S1.Core {
     }
 
     private void OnUpdate(double deltaTime) {
-      // Create Time Class wih own delta time 
       _time.UpdateDeltaTime(deltaTime);
       Input.Instance.UpdateCamMove();
       SceneManager.Instance

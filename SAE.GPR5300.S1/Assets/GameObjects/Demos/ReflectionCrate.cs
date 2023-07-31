@@ -16,7 +16,6 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     private const float Speed = 10;
     private float _rotationMultiplier = 1;
     private float _rotationDegrees;
-    private Vector3 _color = new(0, 0, 0);
     private Texture _texture;
 
     public ReflectionCrate() : base(Game.Instance.Gl) {
@@ -37,14 +36,14 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
       }));
     }
 
-    public override unsafe void UpdateGameObject() {
+    public override void UpdateGameObject() {
       _rotationDegrees = _rotationDegrees.Rotation360(_rotationMultiplier * Speed);
       Transform.Rotation = Transform.RotateZ(_rotationDegrees.DegreesToRadians());
       Transform.Rotation *= Transform.RotateY(_rotationDegrees.DegreesToRadians());
       _matrix = Transform.ViewMatrix;
     }
 
-    public override unsafe void RenderGameObject() {
+    public override void RenderGameObject() {
       Mesh.BindVAO();
       Material.Use();
 

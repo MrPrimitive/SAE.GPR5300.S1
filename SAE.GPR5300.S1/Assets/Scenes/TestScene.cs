@@ -19,7 +19,6 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
 
       AddUi(new UITest());
       AddUi(new UiSceneManager());
-
       _instantiate = true;
     }
 

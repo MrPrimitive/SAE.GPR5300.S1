@@ -20,12 +20,9 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
         return;
       
       SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox_desert", StandardMaterial.Instance.Material, SkyBoxModel.Instance));
-
       AddGameObject(new BlinnPhongLightingPlane());
-      
       AddUi(new UiSceneManager());
       AddUi(new UiBlinnPhongLightingScene());
-
       _instantiate = true;
     }
 

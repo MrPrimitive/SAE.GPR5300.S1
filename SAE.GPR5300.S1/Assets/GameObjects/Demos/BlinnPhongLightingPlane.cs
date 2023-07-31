@@ -34,11 +34,11 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
       Mesh.Textures.Add(new Texture(Gl, "wood.png"));
     }
 
-    public override unsafe void UpdateGameObject() {
+    public override void UpdateGameObject() {
       _matrix = Transform.ViewMatrix;
     }
 
-    public override unsafe void RenderGameObject() {
+    public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
       Material.SetUniform("uModel", _matrix);

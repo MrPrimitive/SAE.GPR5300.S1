@@ -18,17 +18,15 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     private const float Speed = 10;
     private float _rotationMultiplier = 1;
     private float _rotationDegrees;
-    private Vector3 _color = new(0,0,0);
+    private Vector3 _color = new(0, 0, 0);
 
     public P8DemoCube() : base(Game.Instance.Gl) {
       Mesh = new Mesh(Game.Instance.Gl, CubeModel.Instance.Vertices, CubeModel.Instance.Indices);
       Material = P8DemoLightingMaterial.Instance.Material;
       UiP8Scene.ColorEvent += color => _color = color;
-
       UiP8Scene.ShaderMaterialOptionsEvent += shaderMaterialOptions => _shaderMaterialOptions = shaderMaterialOptions;
       UiP8Scene.ShaderLightOptionsEvent += shaderLightOptions => _shaderLightOptions = shaderLightOptions;
       OnLoad();
-      
     }
 
     public override void OnLoad() {
@@ -38,34 +36,18 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
       };
     }
 
-    public override unsafe void UpdateGameObject() {
-      // _shaderMaterialOptions = _shaderMaterialOptions with {
-      // };
+    public override void UpdateGameObject() {
       _rotationDegrees = _rotationDegrees.Rotation360(_rotationMultiplier * Speed);
       Transform.Rotation = Transform.RotateZ(_rotationDegrees.DegreesToRadians());
       Transform.Rotation *= Transform.RotateY(_rotationDegrees.DegreesToRadians());
-
       _matrix = Transform.ViewMatrix;
     }
 
-    public override unsafe void RenderGameObject() {
+    public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
-      Material.SetUniform("uModel", _matrix);
-      Material.SetUniform("uView", Camera.Instance.GetViewMatrix());
-      Material.SetUniform("uProjection", Camera.Instance.GetProjectionMatrix());
-      Material.SetUniform("viewPos", Camera.Instance.Position);
-      Material.SetUniform("material.diffuse", _shaderMaterialOptions.Diffuse);
-      Material.SetUniform("material.specular", _shaderMaterialOptions.Specular);
-      Material.SetUniform("material.shininess", _shaderMaterialOptions.Shininess);
-      Material.SetUniform("light.ambient", _shaderLightOptions.Ambient);
-      Material.SetUniform("light.diffuse", _shaderLightOptions.Diffuse);
-      Material.SetUniform("light.specular", _shaderLightOptions.Specular);
-      Material.SetUniform("light.position", _shaderLightOptions.Position);
-      
+      LightingShaderUtil.SetShaderValues(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);
       Material.SetUniform("color", _color);
-
-
       Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }

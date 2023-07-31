@@ -34,12 +34,9 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       Mesh.Textures.Add(new Texture(Gl, "earth.png"));
       Mesh.Textures.Add(new Texture(Gl, "earth.png"));
       Transform.Position = new Vector3(40, 0, 0);
-      // Transform.Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 0, 1), 180f.DegreesToRadians());
-      // Transform.Rotation = Transform.RotateZ(157f.DegreesToRadians());
-      // Transform.Rotation *= Transform.RotateX(90f.DegreesToRadians());
     }
 
-    public override unsafe void UpdateGameObject() {
+    public override void UpdateGameObject() {
       _rotationDegrees = _rotationDegrees.Rotation360(_solarSystemMultiplier * Speed);
       _rotationSolarSystemDegrees = _rotationSolarSystemDegrees.Rotation360(_solarSystemMultiplier * SolarSystemSpeed);
 
@@ -50,7 +47,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       _matrix *= Matrix4x4.CreateRotationY(_rotationSolarSystemDegrees.DegreesToRadians());
     }
 
-    public override unsafe void RenderGameObject() {
+    public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
       LightingShaderUtil.SetShaderValues(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);

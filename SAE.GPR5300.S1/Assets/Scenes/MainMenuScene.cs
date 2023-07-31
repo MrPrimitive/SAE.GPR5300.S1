@@ -19,7 +19,6 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
         return;
       
       AddUi(new UiMainMenu());
-      
       _instantiate = true;
     }
 

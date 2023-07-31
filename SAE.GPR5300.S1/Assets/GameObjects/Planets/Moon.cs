@@ -36,24 +36,19 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
       Mesh.Textures.Add(new Texture(Gl, "moon.png"));
       Mesh.Textures.Add(new Texture(Gl, "moon.png"));
       Transform.Scale = 0.27f;
-      // Transform.Scale = 4.27f;
-      // Transform.Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 0, 1), 180f.DegreesToRadians());
     }
 
-    public override unsafe void UpdateGameObject() {
+    public override void UpdateGameObject() {
       _rotationDegrees = _rotationDegrees.Rotation360(_solarSystemMultiplier * Speed);
       _rotationSolarSystemDegrees = _rotationSolarSystemDegrees.Rotation360(_solarSystemMultiplier * SolarSystemSpeed);
-
       Transform.Rotation = Transform.RotateY(_rotationDegrees.DegreesToRadians());
       Transform.Position = new Vector3(2, 0, 0);
-
       _matrix = Transform.ViewMatrix;
       _matrix *= _parent.Transform.ViewMatrix;
-
       _matrix *= Matrix4x4.CreateRotationY(_rotationSolarSystemDegrees.DegreesToRadians());
     }
 
-    public override unsafe void RenderGameObject() {
+    public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
       LightingShaderUtil.SetShaderValues(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);

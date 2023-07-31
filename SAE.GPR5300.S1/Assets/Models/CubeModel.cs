@@ -9,9 +9,9 @@ namespace SAE.GPR5300.S1.Assets.Models {
     public uint[] Indices { get; }
 
     private CubeModel() {
-      var objWizard = new ObjConverter("cube.obj");
-      Vertices = objWizard.Vertices;
-      Indices = objWizard.Indices;
+      var objConverter = new ObjConverter("cube.obj");
+      Vertices = objConverter.Vertices;
+      Indices = objConverter.Indices;
     }
   }
 }

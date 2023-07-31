@@ -20,28 +20,14 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
         return;
 
       SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox", StandardMaterial.Instance.Material, SkyBoxModel.Instance));
-
-      var sun = new Sun();
-      AddGameObject(sun);
-
-      var mercury = new Mercury();
-      AddGameObject(mercury);
-
-      var venus = new Venus();
-      AddGameObject(venus);
-
+      AddGameObject(new Sun());
+      AddGameObject(new Mercury());
+      AddGameObject(new Venus());
       var earth = new Earth();
       AddGameObject(earth);
-
-      var moon = new Moon(earth);
-      AddGameObject(moon);
-
-      var mars = new Mars();
-      AddGameObject(mars);
-
-      var uiSolarSystemSetting = new UiSolarSystemSetting(this);
-      AddUi(uiSolarSystemSetting);
-
+      AddGameObject(new Moon(earth));
+      AddGameObject(new Mars());
+      AddUi(new UiSolarSystemSetting());
       _instantiate = true;
     }
 

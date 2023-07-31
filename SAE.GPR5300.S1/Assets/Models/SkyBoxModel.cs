@@ -9,9 +9,9 @@ namespace SAE.GPR5300.S1.Assets.Models {
     public uint[] Indices { get; }
 
     private SkyBoxModel() {
-      var objWizard = new ObjConverter("skybox.obj");
-      Vertices = objWizard.Vertices;
-      Indices = objWizard.Indices;
+      var objConverter = new ObjConverter("skybox.obj");
+      Vertices = objConverter.Vertices;
+      Indices = objConverter.Indices;
     }
   }
 }

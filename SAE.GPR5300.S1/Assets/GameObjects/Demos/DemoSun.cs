@@ -28,11 +28,11 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
       Transform.Scale = 0.5f;
     }
 
-    public override unsafe void UpdateGameObject() {
+    public override void UpdateGameObject() {
       _matrix = Transform.ViewMatrix;
     }
 
-    public override unsafe void RenderGameObject() {
+    public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
       StandardShaderUtil.SetShaderValues(Material, _matrix);

@@ -5,12 +5,10 @@ using SAE.GPR5300.S1.Assets.Scenes;
 namespace SAE.GPR5300.S1.Ui {
   public class UiSolarSystemSetting : IUiInterface {
     private float _solarSystemMultiplier = 1f;
-    private SolarSystemScene _solarSystemScene;
 
     public static Action<float> SolarSystemMultiplierEvent;
 
-    public UiSolarSystemSetting(SolarSystemScene solarSystemScene) {
-      _solarSystemScene = solarSystemScene;
+    public UiSolarSystemSetting() {
     }
 
     public void UpdateUi() {

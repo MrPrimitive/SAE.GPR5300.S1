@@ -20,12 +20,8 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
         return;
       
       SetSkyBox(new SkyCubeBox(Game.Instance.Gl, SkyCubeBoxMaterial.Instance.Material, CubeModel.Instance));
-
       AddGameObject(new ReflectionCrate());
-      // AddGameObject(new DemoSun());
-      
       AddUi(new UiSceneManager());
-
       _instantiate = true;
     }
 

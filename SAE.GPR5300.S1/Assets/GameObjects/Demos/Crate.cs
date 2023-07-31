@@ -38,7 +38,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
       };
     }
 
-    public override unsafe void UpdateGameObject() {
+    public override void UpdateGameObject() {
       _rotationDegrees = _rotationDegrees.Rotation360(_rotationMultiplier * Speed);
       Transform.Rotation = Transform.RotateZ(_rotationDegrees.DegreesToRadians());
       Transform.Rotation *= Transform.RotateY(_rotationDegrees.DegreesToRadians());
@@ -53,7 +53,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
       _matrix = Transform.ViewMatrix;
     }
 
-    public override unsafe void RenderGameObject() {
+    public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
       LightingShaderUtil.SetShaderValues(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);

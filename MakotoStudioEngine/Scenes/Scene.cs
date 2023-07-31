@@ -10,7 +10,6 @@ namespace MSE.Engine.Scenes {
     public void AddUi(IUiInterface ui) => _uis.Add(ui);
     public List<IGameObject> GameObjects() => _gameObjects;
     public List<IUiInterface> Uis() => _uis;
-    // public ISkyBox SkyBox() => _skyBox;
 
     private string _sceneName;
     private ISkyBox _skyBox;
