@@ -10,7 +10,7 @@ using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
 
 namespace SAE.GPR5300.S1.Core {
-  public class Game : IGame {
+  public class Game {
     public static Game Instance => Lazy.Value;
     public IWindow GameWindow { get; private set; } = null!;
     public GL Gl { get; private set; } = null!;

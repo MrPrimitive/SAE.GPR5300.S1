@@ -35,7 +35,17 @@ namespace MSE.Engine.GameObjects {
       if (location == -1) {
         throw new Exception($"{name} uniform not found on shader.");
       }
+
       _gl.Uniform1(location, value);
+    }
+
+    public void SetUniform(string name, bool value) {
+      int location = _gl.GetUniformLocation(_handle, name);
+      if (location == -1) {
+        throw new Exception($"{name} uniform not found on shader.");
+      }
+
+      _gl.Uniform1(location, value ? 1 : 0);
     }
 
     public unsafe void SetUniform(string name, Matrix4x4 value) {
@@ -43,6 +53,7 @@ namespace MSE.Engine.GameObjects {
       if (location == -1) {
         throw new Exception($"{name} uniform not found on shader.");
       }
+
       _gl.UniformMatrix4(location, 1, false, (float*)&value);
     }
 
@@ -51,6 +62,7 @@ namespace MSE.Engine.GameObjects {
       if (location == -1) {
         throw new Exception($"{name} uniform not found on shader.");
       }
+
       _gl.Uniform1(location, value);
     }
 

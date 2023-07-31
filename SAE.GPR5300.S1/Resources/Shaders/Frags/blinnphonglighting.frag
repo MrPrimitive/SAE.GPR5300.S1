@@ -10,8 +10,8 @@ in VS_OUT {
 uniform sampler2D floorTexture;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
-uniform int blinn;
-uniform int isGamma;
+uniform bool blinn;
+uniform bool isGamma;
 uniform float exponentBlinn;
 uniform float exponentPhong;
 
@@ -29,7 +29,7 @@ void main()
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = 0.0;
-    if (blinn == 0)
+    if (blinn)
     {
         vec3 halfwayDir = normalize(lightDir + viewDir);
         spec = pow(max(dot(normal, halfwayDir), 0.0), exponentBlinn);
@@ -41,7 +41,7 @@ void main()
     }
     vec3 specular = vec3(0.3) * spec;
     FragColor = vec4(ambient + diffuse + specular, 1.0);
-    if (isGamma == 1) {
+    if (isGamma) {
         float gamma = 1.2;
         FragColor.rgb = pow(FragColor.rgb, vec3(1.0/gamma));
     }

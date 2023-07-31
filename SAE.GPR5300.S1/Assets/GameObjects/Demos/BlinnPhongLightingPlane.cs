@@ -12,8 +12,8 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     private Matrix4x4 _matrix;
     private const float Speed = 10;
     private Vector3 _color = new(0,0,0);
-    private int _lightTech = 0;
-    private int _isGamma = 0;
+    private bool _lightTech;
+    private bool _isGamma;
     private float _exponentBlinn = 31f;
     private float _exponentPhong = 8f;
 
