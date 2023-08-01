@@ -7,5 +7,6 @@
     public static string P8 = "P8 - Scene";
     public static string P9 = "P9 - Scene";
     public static string BlinnPhongLighting = "Blinn Phong Lighting - Scene";
+    public static string LightOptions = "Light Options";
   }
 }

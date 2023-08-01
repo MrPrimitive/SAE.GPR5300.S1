@@ -12,8 +12,11 @@ uniform vec3 lightPos;
 uniform vec3 viewPos;
 uniform bool blinn;
 uniform bool isGamma;
+uniform bool isDirectional;
 uniform float exponentBlinn;
 uniform float exponentPhong;
+
+vec3 lightDir;
 
 void main()
 {
@@ -21,7 +24,7 @@ void main()
     // ambient
     vec3 ambient = 0.01 * color;
     // diffuse
-    vec3 lightDir = normalize(lightPos - fs_in.FragPos);
+    lightDir = normalize(lightPos - fs_in.FragPos);
     vec3 normal = normalize(fs_in.Normal);
     float diff = max(dot(lightDir, normal), 0.0);
     vec3 diffuse = diff * color;

@@ -70,13 +70,14 @@ namespace SAE.GPR5300.S1.Core {
     }
 
     private void AddAllScene() {
-      SceneManager.Instance.AddScene(new TestScene(SceneName.Test));
       SceneManager.Instance.AddScene(new MainMenuScene(SceneName.MainMenu));
-      SceneManager.Instance.AddScene(new SolarSystemScene(SceneName.SolarSystem));
-      SceneManager.Instance.AddScene(new ReflectionScene(SceneName.Reflection));
       SceneManager.Instance.AddScene(new P8Scene(SceneName.P8));
       SceneManager.Instance.AddScene(new P9Scene(SceneName.P9));
+      SceneManager.Instance.AddScene(new ReflectionScene(SceneName.Reflection));
       SceneManager.Instance.AddScene(new BlinnPhongLightingScene(SceneName.BlinnPhongLighting));
+      SceneManager.Instance.AddScene(new LightOptions(SceneName.LightOptions));
+      SceneManager.Instance.AddScene(new SolarSystemScene(SceneName.SolarSystem));
+      SceneManager.Instance.AddScene(new TestScene(SceneName.Test));
     }
 
     private void OnUpdate(double deltaTime) {

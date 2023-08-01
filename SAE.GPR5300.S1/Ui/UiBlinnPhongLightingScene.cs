@@ -15,7 +15,7 @@ namespace SAE.GPR5300.S1.Ui {
 
     public void UpdateUi() {
       ImGui.Begin("Shader Setting", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
-      if (ImGui.Checkbox("Blinn-Phong Light", ref _isBlinnChecked)) {
+      if (ImGui.Checkbox("Blinn Light", ref _isBlinnChecked)) {
         LightingTechEvent.Invoke(_isBlinnChecked);
       }
       

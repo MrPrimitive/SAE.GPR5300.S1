@@ -11,7 +11,7 @@ namespace SAE.GPR5300.S1.Ui {
     private ImGuiController _controller;
 
     public static UiSceneManager Instance => Lazy.Value;
-    private static readonly Lazy<UiSceneManager> Lazy = new(() => new UiSceneManager());
+    private static readonly Lazy<UiSceneManager> Lazy = new(() => new ());
 
     public UiSceneManager() {
       _controller = UiController.Instance.ImGuiController;
