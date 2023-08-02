@@ -25,10 +25,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Resources\Textures\Mars\" />
-      <Folder Include="Resources\Textures\Mercury\" />
-      <Folder Include="Resources\Textures\Moon\" />
-      <Folder Include="Resources\Textures\Venus\" />
+      <Folder Include="Extensions\Shaders\" />
     </ItemGroup>
     
     <Target Name="CopyCustomContent" AfterTargets="AfterBuild">

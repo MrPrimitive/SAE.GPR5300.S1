@@ -5,10 +5,10 @@ namespace SAE.GPR5300.S1.Assets.Shaders.Materials;
 
 public class LightingMaterial {
   public static LightingMaterial Instance => Lazy.Value;
-  public Material Material;
+  public readonly Material Material;
   private static readonly Lazy<LightingMaterial> Lazy = new(() => new());
 
   private LightingMaterial() {
-    Material = new Material(Game.Instance.Gl, "shader.vert", "lighting.frag");
+    Material = new Material(Game.Instance.Gl, "vShader_base.vert", "fShader_lighting.frag");
   }
 }

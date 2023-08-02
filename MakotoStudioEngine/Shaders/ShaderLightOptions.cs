@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace SAE.GPR5300.S1.Assets.Shaders.Options;
+namespace MSE.Engine.Shaders;
 
 public struct ShaderLightOptions {
   public Vector3 Position { get; set; }

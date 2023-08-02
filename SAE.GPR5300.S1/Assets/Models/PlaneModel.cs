@@ -9,7 +9,7 @@ namespace SAE.GPR5300.S1.Assets.Models {
     public uint[] Indices { get; }
 
     private PlaneModel() {
-      var objConverter = new ObjConverter("plane.obj");
+      var objConverter = new ObjConverter("m_plane");
       Vertices = objConverter.Vertices;
       Indices = objConverter.Indices;
     }

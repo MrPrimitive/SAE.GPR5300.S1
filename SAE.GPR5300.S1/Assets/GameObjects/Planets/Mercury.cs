@@ -2,10 +2,11 @@
 using MSE.Engine.Core;
 using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
+using MSE.Engine.Shaders;
 using MSE.Engine.Utils;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
-using SAE.GPR5300.S1.Assets.Shaders.Options;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 using SAE.GPR5300.S1.Utils;
@@ -26,15 +27,14 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
 
     public Mercury()
       : base(Game.Instance.Gl) {
-      Mesh = new Mesh(Game.Instance.Gl, SphereModel.Instance.Vertices, SphereModel.Instance.Indices);
-      Material = LightingMaterial.Instance.Material;
-      UiSolarSystemSetting.SolarSystemMultiplierEvent += multiplier => _solarSystemMultiplier = multiplier;
       OnLoad();
     }
 
     public override void OnLoad() {
-      Mesh.Textures.Add(new Texture(Gl, "mercury.png"));
-      Mesh.Textures.Add(new Texture(Gl, "mercury.png"));
+      Mesh = new Mesh(Game.Instance.Gl, SphereModel.Instance.Vertices, SphereModel.Instance.Indices);
+      Material = LightingMaterial.Instance.Material;
+      UiSolarSystemSetting.SolarSystemMultiplierEvent += multiplier => _solarSystemMultiplier = multiplier;
+      Mesh.Textures.Add(new Texture(Gl, TextureFileName.TexMercury));
       Transform.Position = new Vector3(20, 0, 0);
       Transform.Scale = 0.38f;
     }
@@ -42,7 +42,6 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     public override void UpdateGameObject() {
       _rotationDegrees = _rotationDegrees.Rotation360(_solarSystemMultiplier * Speed);
       _rotationSolarSystemDegrees = _rotationSolarSystemDegrees.Rotation360(_solarSystemMultiplier * SolarSystemSpeed);
-
       _matrix = Transform.ViewMatrix;
       _matrix *= Matrix4x4.CreateRotationY(_rotationSolarSystemDegrees.DegreesToRadians());
     }
@@ -50,7 +49,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
-      LightingShaderUtil.SetShaderValues(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);
+      Material.SetBaseValues(_matrix)
+        .SetViewPosition()
+        .SetMaterialOptions(_shaderMaterialOptions)
+        .SetLightOptions(_shaderLightOptions);
       Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }

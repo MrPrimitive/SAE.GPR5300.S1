@@ -5,8 +5,6 @@ using SAE.GPR5300.S1.Ui;
 
 namespace SAE.GPR5300.S1.Assets.Scenes {
   public class MainMenuScene : Scene, IScene {
-    private UiScene _uiScene;
-    private SkyBox _skyBox;
     private bool _instantiate;
 
     public MainMenuScene(string sceneName) : base(sceneName) {

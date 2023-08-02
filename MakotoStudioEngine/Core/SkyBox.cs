@@ -4,64 +4,46 @@ using MSE.Engine.GameObjects;
 using MSE.Engine.Interfaces;
 using MSE.Engine.Utils;
 using Silk.NET.OpenGL;
+using Color = System.Drawing.Color;
 using Texture = MSE.Engine.GameObjects.Texture;
 
 namespace MSE.Engine.Core {
   public class SkyBox : ISkyBox {
-    // private BufferObject<uint> Ebo;
-    // private BufferObject<float> Vbo;
-    // private VertexArrayObjectOld<float, uint> VaoCube;
-
     public Transform Transform { get; set; }
     public Material Material { get; set; }
     public Mesh Mesh { get; set; }
 
-    private Texture _texture;
     private GL _gl;
-    private string _textureName;
-    private Matrix4x4 _matrix;
     private IModel _model;
+    private string _textureName;
 
     public SkyBox(GL gl,
       string textureName,
       Material material,
       IModel model) {
+      _gl = gl;
       _model = model;
       _textureName = textureName;
       Material = material;
-      _gl = gl;
+      Transform = new Transform();
       Init();
     }
 
     private void Init() {
       Mesh = new Mesh(_gl, _model.Vertices, _model.Indices);
-      _texture = new Texture(_gl, $"{_textureName}.jpg");
+      Mesh.Textures.Add(new Texture(_gl, _textureName));
+      Transform.Scale = 500f;
+      Transform.Rotation = Transform.RotateY(180f.DegreesToRadians());
     }
 
-    public unsafe void Update() {
-    }
-
-    public unsafe void Render() {
-      // draw skybox as last
-      // _gl.DepthMask(false);
+    public void Render() {
       _gl.Disable(EnableCap.DepthTest);
       Mesh.Bind();
       Material.Use();
-
-      _matrix = Matrix4x4.Identity;
-      _matrix *= Matrix4x4.CreateRotationX(180f.DegreesToRadians());
-      _matrix *= Matrix4x4.CreateScale(500f);
-
-      Material.SetUniform("uModel", _matrix);
-      Material.SetUniform("uView", Camera.Instance.GetViewMatrix());
-      Material.SetUniform("uProjection", Camera.Instance.GetProjectionMatrix());
-      Material.SetUniform("fColor", new Vector3(1.0f, 1.0f, 1.0f));
-
-      _texture.Bind();
+      Material.SetBaseValues(Transform.ViewMatrix)
+        .SetFragColor(Color.White);
       _gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
-
       _gl.Enable(EnableCap.DepthTest);
-      // _gl.DepthMask(true); // set depth function back to default
     }
   }
 }

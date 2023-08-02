@@ -1,9 +1,10 @@
 ﻿using System.Numerics;
 using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
+using MSE.Engine.Shaders;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
-using SAE.GPR5300.S1.Assets.Shaders.Options;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 using SAE.GPR5300.S1.Utils;
@@ -31,7 +32,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     }
 
     public override void OnLoad() {
-      Mesh.Textures.Add(new Texture(Gl, "crate.jpg"));
+      Mesh.Textures.Add(new Texture(Gl, TextureFileName.TexStandardCrate));
     }
 
     public override void UpdateGameObject() {
@@ -52,8 +53,11 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
-      LightingShaderUtil.SetShaderValues(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);
-      Material.SetUniform("isDirectional", _isDirectional);
+      Material.SetBaseValues(_matrix)
+        .SetViewPosition()
+        .SetMaterialOptions(_shaderMaterialOptions)
+        .SetLightOptions(_shaderLightOptions)
+        .SetUniform("isDirectional", _isDirectional);
       Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }

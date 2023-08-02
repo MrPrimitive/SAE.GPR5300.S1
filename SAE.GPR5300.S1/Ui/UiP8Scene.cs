@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using ImGuiNET;
 using MSE.Engine.Interfaces;
-using SAE.GPR5300.S1.Assets.Shaders.Options;
+using MSE.Engine.Shaders;
 
 namespace SAE.GPR5300.S1.Ui {
   public class UiP8Scene : IUiInterface {

@@ -1,8 +1,10 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 using SAE.GPR5300.S1.Utils;
@@ -18,14 +20,14 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
 
     public Sun()
       : base(Game.Instance.Gl) {
-      Mesh = new Mesh(Game.Instance.Gl, SphereModel.Instance.Vertices, SphereModel.Instance.Indices);
-      Mesh.Textures.Add(new Texture(Gl, "sun.png"));
-      Material = StandardMaterial.Instance.Material;
-      UiSolarSystemSetting.SolarSystemMultiplierEvent += multiplier => _solarSystemMultiplier = multiplier;
       OnLoad();
     }
 
     public override void OnLoad() {
+      Mesh = new Mesh(Game.Instance.Gl, SphereModel.Instance.Vertices, SphereModel.Instance.Indices);
+      Material = StandardMaterial.Instance.Material;
+      UiSolarSystemSetting.SolarSystemMultiplierEvent += multiplier => _solarSystemMultiplier = multiplier;
+      Mesh.Textures.Add(new Texture(Gl, TextureFileName.TexSun));
       Transform.Scale = 5f;
       Transform.Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 0, 1), 180f.DegreesToRadians());
     }
@@ -39,7 +41,8 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
-      StandardShaderUtil.SetShaderValues(Material, _matrix);
+      Material.SetBaseValues(_matrix)
+        .SetFragColor(Color.White);
       Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }

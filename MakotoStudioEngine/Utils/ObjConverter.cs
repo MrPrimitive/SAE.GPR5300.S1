@@ -31,9 +31,9 @@ namespace MSE.Engine.Utils {
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="path">File path</param>
-    public ObjConverter(string path) {
-      _fileFullPath = FileLoaderPath + path;
+    /// <param name="name">File path</param>
+    public ObjConverter(string name) {
+      _fileFullPath = FileLoaderPath + name + ".obj";
       Load();
     }
 

@@ -8,7 +8,7 @@ namespace MSE.Engine.Core {
     private uint _handle;
     private GL _gl;
 
-    public VertexArrayObject(GL gl, BufferObject<TVertexType> vbo, BufferObject<TIndexType> ebo) {
+    public VertexArrayObject(GL gl, VertexBufferObject<TVertexType> vbo, VertexBufferObject<TIndexType> ebo) {
       _gl = gl;
       _handle = _gl.GenVertexArray();
       Bind();

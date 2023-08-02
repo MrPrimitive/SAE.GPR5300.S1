@@ -1,11 +1,11 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
-using SAE.GPR5300.S1.Ui;
-using SAE.GPR5300.S1.Utils;
 using Silk.NET.OpenGL;
 using Texture = MSE.Engine.GameObjects.Texture;
 
@@ -23,7 +23,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     }
 
     public override void OnLoad() {
-      Mesh.Textures.Add(new Texture(Gl, "sun.png"));
+      Mesh.Textures.Add(new Texture(Gl, TextureFileName.TexSun));
       Transform.Position = new Vector3(0f);
       Transform.Scale = 0.5f;
     }
@@ -35,7 +35,8 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
-      StandardShaderUtil.SetShaderValues(Material, _matrix);
+      Material.SetBaseValues(_matrix)
+        .SetFragColor(Color.White);
       Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }

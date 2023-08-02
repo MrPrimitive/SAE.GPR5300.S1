@@ -49,7 +49,6 @@ namespace MSE.Engine.GameObjects {
     public unsafe Texture(GL gl,
       List<string> textureNames) {
       _gl = gl;
-
       _handle = _gl.GenTexture();
       _gl.BindTexture(TextureTarget.TextureCubeMap, _handle);
 
@@ -92,6 +91,10 @@ namespace MSE.Engine.GameObjects {
     public void Bind(TextureUnit textureSlot = TextureUnit.Texture0) {
       _gl.ActiveTexture(textureSlot);
       _gl.BindTexture(TextureTarget.Texture2D, _handle);
+    }
+    
+    public void BindCubeMap() {
+      // _gl.BindTexture(TextureTarget.TextureCubeMap, _handle);
     }
 
     public void Dispose() {

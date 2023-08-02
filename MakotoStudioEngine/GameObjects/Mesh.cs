@@ -4,39 +4,35 @@ using Silk.NET.OpenGL;
 
 namespace MSE.Engine.GameObjects {
   public class Mesh : IDisposable {
-    public float[] Vertices { get; }
-    public uint[] Indices { get; }
     public List<Texture> Textures { get; private set; } = new();
-    public VertexArrayObject<float, uint> VertexArrayObject { get; }
     public uint IndicesLength { get; }
-    private BufferObject<uint> Ebo;
-    private BufferObject<float> Vbo;
+    private readonly VertexArrayObject<float, uint> _vertexArrayObject;
 
     public Mesh(GL gl, float[] vertices, uint[] indices) {
-      Vertices = vertices;
-      Indices = indices;
-      IndicesLength = (uint)Indices.Length;
-      Ebo = new BufferObject<uint>(gl, Indices, BufferTargetARB.ElementArrayBuffer);
-      Vbo = new BufferObject<float>(gl, Vertices, BufferTargetARB.ArrayBuffer);
-      VertexArrayObject = new VertexArrayObject<float, uint>(gl, Vbo, Ebo);
-      VertexArrayObject.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 8, 0);
-      VertexArrayObject.VertexAttributePointer(1, 3, VertexAttribPointerType.Float, 8, 3);
-      VertexArrayObject.VertexAttributePointer(2, 2, VertexAttribPointerType.Float, 8, 6);
+      IndicesLength = (uint)indices.Length;
+      var ebo = new VertexBufferObject<uint>(gl, indices, BufferTargetARB.ElementArrayBuffer);
+      var vbo = new VertexBufferObject<float>(gl, vertices, BufferTargetARB.ArrayBuffer);
+      _vertexArrayObject = new VertexArrayObject<float, uint>(gl, vbo, ebo);
+      _vertexArrayObject.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 8, 0);
+      _vertexArrayObject.VertexAttributePointer(1, 3, VertexAttribPointerType.Float, 8, 3);
+      _vertexArrayObject.VertexAttributePointer(2, 2, VertexAttribPointerType.Float, 8, 6);
     }
 
     public void Bind() {
-      VertexArrayObject.Bind();
+      _vertexArrayObject.Bind();
       for (int i = 0; i < Textures.Count; i++) {
         Textures[i].Bind(TextureUnit.Texture0 + i);
       }
     }
-    public void BindVAO() {
-      VertexArrayObject.Bind();
+
+    public void BindCubeMap() {
+      _vertexArrayObject.Bind();
+      Textures[0].BindCubeMap();
     }
 
     public void Dispose() {
       Textures = null;
-      VertexArrayObject.Dispose();
+      _vertexArrayObject.Dispose();
     }
   }
 }

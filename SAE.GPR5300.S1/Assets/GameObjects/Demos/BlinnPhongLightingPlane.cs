@@ -1,7 +1,9 @@
 ﻿using System.Numerics;
+using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 using Silk.NET.OpenGL;
@@ -31,7 +33,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     }
 
     public override void OnLoad() {
-      Mesh.Textures.Add(new Texture(Gl, "wood.png"));
+      Mesh.Textures.Add(new Texture(Gl, TextureFileName.TexStandardWood));
     }
 
     public override void UpdateGameObject() {
@@ -41,10 +43,8 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
-      Material.SetUniform("uModel", _matrix);
-      Material.SetUniform("uView", Camera.Instance.GetViewMatrix());
-      Material.SetUniform("uProjection", Camera.Instance.GetProjectionMatrix());
-      Material.SetUniform("viewPos", Camera.Instance.Position);
+      Material.SetBaseValues(_matrix)
+        .SetViewPosition();
       Material.SetUniform("lightPos",new Vector3(0f,1.5f,0f));
       Material.SetUniform("blinn", _lightTech);
       Material.SetUniform("isGamma", _isGamma);

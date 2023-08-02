@@ -4,12 +4,12 @@ using MSE.Engine.Scenes;
 using SAE.GPR5300.S1.Assets.GameObjects.Demos;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 
 namespace SAE.GPR5300.S1.Assets.Scenes {
   public class P9Scene : Scene, IScene {
-    private SkyBox _skyBox;
     private bool _instantiate;
 
     public P9Scene(string sceneName) : base(sceneName) {
@@ -19,7 +19,10 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
       if (_instantiate)
         return;
       
-      SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox_desert", StandardMaterial.Instance.Material, SkyBoxModel.Instance));
+      SetSkyBox(new SkyBox(Game.Instance.Gl, 
+        TextureFileName.TexSkyBoxDesert,
+        StandardMaterial.Instance.Material, 
+        SkyBoxModel.Instance));
       AddGameObject(new Crate());
       AddGameObject(new DemoSun());
       AddUi(new UiSceneManager());

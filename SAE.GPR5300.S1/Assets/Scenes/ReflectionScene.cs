@@ -4,12 +4,12 @@ using MSE.Engine.Scenes;
 using SAE.GPR5300.S1.Assets.GameObjects.Demos;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 
 namespace SAE.GPR5300.S1.Assets.Scenes {
   public class ReflectionScene : Scene, IScene {
-    private SkyBox _skyBox;
     private bool _instantiate;
 
     public ReflectionScene(string sceneName) : base(sceneName) {
@@ -18,9 +18,13 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
     public new void LoadScene() {
       if (_instantiate)
         return;
-      
-      SetSkyBox(new SkyCubeBox(Game.Instance.Gl, SkyCubeBoxMaterial.Instance.Material, CubeModel.Instance));
-      AddGameObject(new ReflectionCrate());
+
+      SetSkyBox(new SkyCubeBox(Game.Instance.Gl,
+        TextureFileName.TexSkyBoxCubeWaterMountain,
+        // TextureFileName.TexSkyBoxCubeAnime,
+        SkyCubeBoxMaterial.Instance.Material,
+        CubeModel.Instance));
+      AddGameObject(new ReflectionDodecahedron());
       AddUi(new UiSceneManager());
       _instantiate = true;
     }

@@ -4,22 +4,23 @@ using MSE.Engine.Scenes;
 using SAE.GPR5300.S1.Assets.GameObjects.Demos;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 
 namespace SAE.GPR5300.S1.Assets.Scenes {
   public class LightOptions : Scene, IScene {
-    private SkyBox _skyBox;
     private bool _instantiate;
 
-    public LightOptions(string sceneName) : base(sceneName) {
-    }
+    public LightOptions(string sceneName) : base(sceneName) { }
 
     public new void LoadScene() {
       if (_instantiate)
         return;
 
-      SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox_desert", StandardMaterial.Instance.Material,
+      SetSkyBox(new SkyBox(Game.Instance.Gl, 
+        TextureFileName.TexSkyBoxDesert, 
+        StandardMaterial.Instance.Material,
         SkyBoxModel.Instance));
       AddGameObject(new LightOptionCrate());
       

@@ -1,4 +1,4 @@
-﻿namespace SAE.GPR5300.S1.Assets.Shaders.Options;
+﻿namespace MSE.Engine.Shaders;
 
 public struct ShaderMaterialOptions {
   public int Diffuse { get; set; }
@@ -12,7 +12,7 @@ public struct ShaderMaterialOptions {
   }
 
   static ShaderMaterialOptions() {
-    Defualt = new ShaderMaterialOptions(0, 1, 1.0f);
+    Defualt = new ShaderMaterialOptions(0, 0, 1.0f);
   }
 
   public static ShaderMaterialOptions Defualt { get; }

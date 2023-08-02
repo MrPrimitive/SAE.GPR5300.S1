@@ -4,6 +4,7 @@ using MSE.Engine.Scenes;
 using SAE.GPR5300.S1.Assets.GameObjects.Planets;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 
@@ -19,7 +20,7 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
       if (_instantiate)
         return;
 
-      SetSkyBox(new SkyBox(Game.Instance.Gl, "skybox", StandardMaterial.Instance.Material, SkyBoxModel.Instance));
+      SetSkyBox(new SkyBox(Game.Instance.Gl, TextureFileName.TexSkyBoxSpace, StandardMaterial.Instance.Material, SkyBoxModel.Instance));
       AddGameObject(new Sun());
       AddGameObject(new Mercury());
       AddGameObject(new Venus());

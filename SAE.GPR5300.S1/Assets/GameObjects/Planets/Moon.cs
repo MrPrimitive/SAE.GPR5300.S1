@@ -1,9 +1,10 @@
 ﻿using System.Numerics;
 using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
+using MSE.Engine.Shaders;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
-using SAE.GPR5300.S1.Assets.Shaders.Options;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 using SAE.GPR5300.S1.Utils;
@@ -25,16 +26,15 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
 
     public Moon(GameObject parent)
       : base(Game.Instance.Gl) {
-      Mesh = new Mesh(Game.Instance.Gl, SphereModel.Instance.Vertices, SphereModel.Instance.Indices);
-      Material = LightingMaterial.Instance.Material;
       _parent = parent;
-      UiSolarSystemSetting.SolarSystemMultiplierEvent += multiplier => _solarSystemMultiplier = multiplier;
       OnLoad();
     }
 
     public override void OnLoad() {
-      Mesh.Textures.Add(new Texture(Gl, "moon.png"));
-      Mesh.Textures.Add(new Texture(Gl, "moon.png"));
+      Mesh = new Mesh(Game.Instance.Gl, SphereModel.Instance.Vertices, SphereModel.Instance.Indices);
+      Material = LightingMaterial.Instance.Material;
+      UiSolarSystemSetting.SolarSystemMultiplierEvent += multiplier => _solarSystemMultiplier = multiplier;
+      Mesh.Textures.Add(new Texture(Gl, TextureFileName.TexMoon));
       Transform.Scale = 0.27f;
     }
 
@@ -51,7 +51,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     public override void RenderGameObject() {
       Mesh.Bind();
       Material.Use();
-      LightingShaderUtil.SetShaderValues(Material, _matrix, _shaderMaterialOptions, _shaderLightOptions);
+      Material.SetBaseValues(_matrix)
+        .SetViewPosition()
+        .SetMaterialOptions(_shaderMaterialOptions)
+        .SetLightOptions(_shaderLightOptions);
       Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }

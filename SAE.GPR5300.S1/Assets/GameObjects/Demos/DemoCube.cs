@@ -1,9 +1,10 @@
 ﻿using System.Numerics;
 using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
+using MSE.Engine.Shaders;
 using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
-using SAE.GPR5300.S1.Assets.Shaders.Options;
+using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 using SAE.GPR5300.S1.Utils;
@@ -11,29 +12,32 @@ using Silk.NET.OpenGL;
 using Texture = MSE.Engine.GameObjects.Texture;
 
 namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
-  public class ReflectionCrate : GameObject {
+  public class DemoCube : GameObject {
+    private ShaderMaterialOptions _shaderMaterialOptions = ShaderMaterialOptions.Defualt;
+    private ShaderLightOptions _shaderLightOptions = ShaderLightOptions.Default;
     private Matrix4x4 _matrix;
     private const float Speed = 10;
     private float _rotationMultiplier = 1;
     private float _rotationDegrees;
-    private Texture _texture;
+    private Vector3 _color = new(0, 0, 0);
 
-    public ReflectionCrate() : base(Game.Instance.Gl) {
+    public DemoCube() : base(Game.Instance.Gl) {
       Mesh = new Mesh(Game.Instance.Gl, CubeModel.Instance.Vertices, CubeModel.Instance.Indices);
-      Material = ReflectionMaterial.Instance.Material;
-      Transform.Scale = 9f;
+      Material = DemoLightingMaterial.Instance.Material;
+      UiP8Scene.ColorEvent += color => _color = color;
+      UiP8Scene.ShaderMaterialOptionsEvent += shaderMaterialOptions => _shaderMaterialOptions = shaderMaterialOptions;
+      UiP8Scene.ShaderLightOptionsEvent += shaderLightOptions => _shaderLightOptions = shaderLightOptions;
       OnLoad();
     }
 
     public override void OnLoad() {
-      Mesh.Textures.Add(new Texture(Gl, new List<string> {
-        "right.jpg",
-        "left.jpg",
-        "top.jpg",
-        "bottom.jpg",
-        "front.jpg",
-        "back.jpg"
-      }));
+      Mesh.Textures.Add(new Texture(Gl, TextureFileName.TexStandardCrate));
+      _shaderLightOptions = _shaderLightOptions with {
+        Position = new Vector3(4f)
+      };
+      _shaderMaterialOptions = _shaderMaterialOptions with {
+        Specular = 1
+      };
     }
 
     public override void UpdateGameObject() {
@@ -44,14 +48,12 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
     }
 
     public override void RenderGameObject() {
-      Mesh.BindVAO();
+      Mesh.Bind();
       Material.Use();
-
-      Material.SetUniform("model", _matrix);
-      Material.SetUniform("view", Camera.Instance.GetViewMatrix());
-      Material.SetUniform("projection", Camera.Instance.GetProjectionMatrix());
-      Material.SetUniform("cameraPos", Camera.Instance.Position);
-
+      Material.SetBaseValues(_matrix)
+        .SetMaterialOptions(_shaderMaterialOptions)
+        .SetLightOptions(_shaderLightOptions)
+        .SetUniform("color", _color);
       Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }
