@@ -1,7 +1,7 @@
 ﻿namespace SAE.GPR5300.S1.Core {
   public static class SceneName {
     public static string MainMenu = "Main Menu Scene";
-    public static string Test = "Test Scene";
+    public static string WorldMap = "World Map Scene";
     public static string SolarSystem = "Solar System Scene";
     public static string Reflection = "Reflection - Scene";
     public static string P8 = "P8 - Scene";

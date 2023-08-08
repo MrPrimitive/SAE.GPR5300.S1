@@ -1,4 +1,6 @@
-﻿using MSE.Engine.Interfaces;
+﻿using System.Numerics;
+using MSE.Engine.GameObjects;
+using MSE.Engine.Interfaces;
 
 namespace MSE.Engine.Core {
   public class SceneManager {
@@ -37,6 +39,8 @@ namespace MSE.Engine.Core {
       // TODO: Unload current active scene
       var currentScene = Instance.GetActiveScene();
 
+      Camera.Instance.Position = new Vector3(0, 0, 50f);
+      Camera.Instance.Front = Vector3.UnitZ * -1;
       scene.LoadScene();
       Instance.SetSceneActive(scene.GetSceneName());
       currentScene.Unload();

@@ -7,13 +7,17 @@ namespace MSE.Engine.GameObjects {
     public static Camera Instance => Lazy.Value;
     public Vector3 Position { get; set; } = new(0.0f, 0.0f, 3.0f);
     public float AspectRatio { get; set; } = 2F;
-    public Vector3 Front => _cameraFront;
+    public Vector3 Front {
+      get => _cameraFront;
+      set => _cameraFront = value;
+    }
+
     public Vector3 Up => _cameraUp;
     public float Yaw => _cameraYaw;
     public float Pitch => _cameraPitch;
     public float Zoom => _cameraZoom;
 
-    private static readonly Lazy<Camera> Lazy = new(() => new Camera());
+    private static readonly Lazy<Camera> Lazy = new(() => new());
     private Vector3 _cameraFront = new(0.0f, 0.0f, -1.0f);
     private Vector3 _cameraUp = Vector3.UnitY;
     private float _cameraYaw = -90f;

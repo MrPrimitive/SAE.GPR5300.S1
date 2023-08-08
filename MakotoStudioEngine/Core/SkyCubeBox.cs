@@ -1,8 +1,6 @@
-﻿using System.Numerics;
-using MSE.Engine.Extensions;
+﻿using MSE.Engine.Extensions;
 using MSE.Engine.GameObjects;
 using MSE.Engine.Interfaces;
-using MSE.Engine.Utils;
 using Silk.NET.OpenGL;
 using Texture = MSE.Engine.GameObjects.Texture;
 
@@ -32,6 +30,10 @@ namespace MSE.Engine.Core {
       Mesh = new Mesh(_gl, _model.Vertices, _model.Indices);
       Mesh.Textures.Add(new Texture(_gl, _skyBoxCubeTextures));
       Transform.Scale = 500f;
+    }
+
+    public void Update() {
+      Transform.Position = Camera.Instance.Position;
     }
 
     public void Render() {

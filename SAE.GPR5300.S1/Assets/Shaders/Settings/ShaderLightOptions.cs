@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace MSE.Engine.Shaders;
+namespace SAE.GPR5300.S1.Assets.Shaders.Settings;
 
 public struct ShaderLightOptions {
   public Vector3 Position { get; set; }
@@ -20,10 +20,10 @@ public struct ShaderLightOptions {
 
   static ShaderLightOptions() {
     Default = new ShaderLightOptions(
-      new Vector3(1.0f),
-      new Vector3(1.7f) * new Vector3(0.1f),
-      new Vector3(1.7f),
-      new Vector3(1.0f));
+    new Vector3(1.0f),
+    new Vector3(1.7f) * new Vector3(0.1f),
+    new Vector3(1.7f),
+    new Vector3(1.0f));
   }
 
   public static ShaderLightOptions Default { get; }

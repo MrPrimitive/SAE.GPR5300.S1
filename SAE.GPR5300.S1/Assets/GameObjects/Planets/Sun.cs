@@ -6,7 +6,7 @@ using SAE.GPR5300.S1.Assets.Models;
 using SAE.GPR5300.S1.Assets.Shaders.Materials;
 using SAE.GPR5300.S1.Assets.Textures;
 using SAE.GPR5300.S1.Core;
-using SAE.GPR5300.S1.Ui;
+using SAE.GPR5300.S1.Ui.SolarSystemUi;
 using SAE.GPR5300.S1.Utils;
 using Silk.NET.OpenGL;
 using Texture = MSE.Engine.GameObjects.Texture;
@@ -18,17 +18,12 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Planets {
     private float _rotationDegrees;
     private float _solarSystemMultiplier = 1;
 
-    public Sun()
-      : base(Game.Instance.Gl) {
-      OnLoad();
-    }
-
-    public override void OnLoad() {
+    public Sun() : base(Game.Instance.Gl) {
       Mesh = new Mesh(Game.Instance.Gl, SphereModel.Instance.Vertices, SphereModel.Instance.Indices);
       Material = StandardMaterial.Instance.Material;
       UiSolarSystemSetting.SolarSystemMultiplierEvent += multiplier => _solarSystemMultiplier = multiplier;
       Mesh.Textures.Add(new Texture(Gl, TextureFileName.TexSun));
-      Transform.Scale = 5f;
+      Transform.Scale = 10f;
       Transform.Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 0, 1), 180f.DegreesToRadians());
     }
 

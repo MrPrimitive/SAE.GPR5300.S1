@@ -1,23 +1,24 @@
-﻿using MSE.Engine.Core;
-using MSE.Engine.Extensions;
-using MSE.Engine.GameObjects;
+﻿using MSE.Engine.Extensions;
 using MSE.Engine.Interfaces;
-using Silk.NET.OpenGL;
 
 namespace MSE.Engine.Scenes {
   public class Scene : Disposable, IScene {
     public string GetSceneName() => _sceneName;
-    public void AddUi(IUiInterface ui) => _uis.Add(ui);
-    public List<IGameObject> GameObjects() => _gameObjects;
-    public List<IUiInterface> Uis() => _uis;
+    public string GetDescription() => _sceneDescription;
 
-    private string _sceneName;
-    private ISkyBox _skyBox;
-    private List<IGameObject> _gameObjects = new();
-    private List<IUiInterface> _uis = new();
+    public void AddUi(IUserInterface user) => _uis.Add(user);
+    public void AddGameObject(IGameObject go) => _gameObjects.Add(go);
+    public void SetSkyBox(ISkyBox skyBox) => _skyBox = skyBox;
 
-    public Scene(string sceneName) {
+    private ISkyBox? _skyBox;
+    private readonly string _sceneName;
+    private readonly string _sceneDescription;
+    private readonly List<IGameObject> _gameObjects = new();
+    private readonly List<IUserInterface> _uis = new();
+
+    protected Scene(string sceneName, string sceneDescription) {
       _sceneName = sceneName;
+      _sceneDescription = sceneDescription;
     }
 
     public void LoadScene() {
@@ -26,26 +27,15 @@ namespace MSE.Engine.Scenes {
     public void Unload() {
     }
 
-    public void AddGameObject(GameObject go) {
-      _gameObjects.Add(go);
-    }
-
-    public void SetSkyBox(ISkyBox skyBox) {
-      _skyBox = skyBox;
-    }
-
     public void RenderScene() {
-      if (_skyBox != null)
-        _skyBox.Render();
-
-      GameObjects().RenderGameObjects();
-
-      Uis().Update();
-      Uis().Render();
+      _skyBox?.Render();
+      _gameObjects.RenderGameObjects();
     }
 
     public void UpdateScene() {
-      GameObjects().UpdateGameObjects();
+      _skyBox?.Update();
+      _gameObjects.UpdateGameObjects();
+      _uis.Update();
     }
   }
 }

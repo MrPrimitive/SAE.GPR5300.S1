@@ -12,9 +12,7 @@ using Texture = MSE.Engine.GameObjects.Texture;
 namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
   public class BlinnPhongLightingPlane : GameObject {
     private Matrix4x4 _matrix;
-    private const float Speed = 10;
-    private Vector3 _color = new(0,0,0);
-    private bool _lightTech;
+    private bool _isBlinn;
     private bool _isGamma;
     private float _exponentBlinn = 31f;
     private float _exponentPhong = 8f;
@@ -24,15 +22,10 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
       Material = BlinnPhongLightingMaterial.Instance.Material;
       Transform.Scale = 20f;
       Transform.Position = new Vector3(0f, -20f, 0f);
-      UiBlinnPhongLightingScene.LightingTechEvent += lightTech => _lightTech = lightTech;
+      UiBlinnPhongLightingScene.IsBlinnEvent += isBlinn => _isBlinn = isBlinn;
       UiBlinnPhongLightingScene.IsGammaEvent += isGama => _isGamma = isGama;
       UiBlinnPhongLightingScene.ExponentBlinnEvent += exponentBlinn => _exponentBlinn = exponentBlinn;
       UiBlinnPhongLightingScene.ExponentPhongEvent += exponentPhong => _exponentPhong = exponentPhong;
-      
-      OnLoad();
-    }
-
-    public override void OnLoad() {
       Mesh.Textures.Add(new Texture(Gl, TextureFileName.TexStandardWood));
     }
 
@@ -45,8 +38,8 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
       Material.Use();
       Material.SetBaseValues(_matrix)
         .SetViewPosition();
-      Material.SetUniform("lightPos",new Vector3(0f,1.5f,0f));
-      Material.SetUniform("blinn", _lightTech);
+      Material.SetUniform("lightPos", new Vector3(0f, 1.5f, 0f));
+      Material.SetUniform("blinn", _isBlinn);
       Material.SetUniform("isGamma", _isGamma);
       Material.SetUniform("exponentBlinn", _exponentBlinn);
       Material.SetUniform("exponentPhong", _exponentPhong);
@@ -54,7 +47,7 @@ namespace SAE.GPR5300.S1.Assets.GameObjects.Demos {
       Gl.DrawArrays(PrimitiveType.Triangles, 0, Mesh.IndicesLength);
     }
   }
-  
+
   public enum BlinnPhongLighting {
     Blinn,
     BlinnPhong

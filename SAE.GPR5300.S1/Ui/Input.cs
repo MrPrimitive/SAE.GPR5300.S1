@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Collections;
+using System.Numerics;
 using MSE.Engine.Core;
 using MSE.Engine.GameObjects;
 using SAE.GPR5300.S1.Core;
@@ -27,10 +28,10 @@ namespace SAE.GPR5300.S1.Ui {
         _primaryKeyboard.KeyDown += KeyDown;
       }
 
-      for (int i = 0; i < _inputContext.Mice.Count; i++) {
-        _inputContext.Mice[i].Cursor.CursorMode = CursorMode.Normal;
-        _inputContext.Mice[i].MouseMove += OnMouseMove;
-        _inputContext.Mice[i].Scroll += OnMouseWheel;
+      foreach (var mouse in _inputContext.Mice) {
+        mouse.Cursor.CursorMode = CursorMode.Normal;
+        mouse.MouseMove += OnMouseMove;
+        mouse.Scroll += OnMouseWheel;
       }
     }
 
@@ -74,7 +75,7 @@ namespace SAE.GPR5300.S1.Ui {
       }
     }
 
-    private unsafe void OnMouseMove(IMouse mouse, Vector2 position) {
+    private void OnMouseMove(IMouse mouse, Vector2 position) {
       if (_insertMode)
         return;
 
@@ -90,7 +91,7 @@ namespace SAE.GPR5300.S1.Ui {
       }
     }
 
-    private unsafe void OnMouseWheel(IMouse mouse, ScrollWheel scrollWheel) {
+    private void OnMouseWheel(IMouse mouse, ScrollWheel scrollWheel) {
       if (_insertMode)
         return;
       Camera.Instance.ModifyZoom(scrollWheel.Y);

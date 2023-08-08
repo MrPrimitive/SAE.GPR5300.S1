@@ -92,10 +92,6 @@ namespace MSE.Engine.GameObjects {
       _gl.ActiveTexture(textureSlot);
       _gl.BindTexture(TextureTarget.Texture2D, _handle);
     }
-    
-    public void BindCubeMap() {
-      // _gl.BindTexture(TextureTarget.TextureCubeMap, _handle);
-    }
 
     public void Dispose() {
       _gl.DeleteTexture(_handle);

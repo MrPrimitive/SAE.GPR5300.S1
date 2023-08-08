@@ -3,14 +3,11 @@ using MSE.Engine.Interfaces;
 using Silk.NET.OpenGL.Extensions.ImGui;
 
 namespace SAE.GPR5300.S1.Ui {
-  public class UiLightOptions : IUiInterface {
+  public class UiLightOptions : IUserInterface {
+    public static Action<bool> DirectionalEvent;
+    
     private ImGuiController _controller;
     private bool _isDirectional;
-
-    public static UiLightOptions Instance => Lazy.Value;
-    private static readonly Lazy<UiLightOptions> Lazy = new(() => new());
-
-    public static Action<bool> DirectionalEvent;
 
     public UiLightOptions() {
       _controller = UiController.Instance.ImGuiController;
@@ -23,10 +20,6 @@ namespace SAE.GPR5300.S1.Ui {
       }
 
       ImGui.End();
-    }
-
-    public void RenderUi() {
-      _controller.Render();
     }
   }
 }

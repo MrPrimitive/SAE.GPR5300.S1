@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
+using ImGuiNET;
 using MSE.Engine.Core;
 using MSE.Engine.GameObjects;
-using MSE.Engine.Interfaces;
 using SAE.GPR5300.S1.Assets.Scenes;
 using SAE.GPR5300.S1.Settings;
 using SAE.GPR5300.S1.Ui;
@@ -49,17 +49,23 @@ namespace SAE.GPR5300.S1.Core {
     private void OnLoad() {
       Gl = GameWindow.CreateOpenGL();
       ProgramSetting.Instance.SetSize(GameWindow.Size.X, GameWindow.Size.Y);
-
+      Gl.PolygonMode(TriangleFace.Back, PolygonMode.Fill);
       if (ProgramSetting.Instance.IsFullScreen) {
         Gl.Viewport(ProgramSetting.Instance.GetScreenSize);
       }
 
+      
+
+      int width = ProgramSetting.Instance.GetScreenSize.X;
+      int height = ProgramSetting.Instance.GetScreenSize.Y;
+
       Camera.Instance.SetUp(Vector3.UnitZ * 50,
         Vector3.UnitZ * -1,
         Vector3.UnitY,
-        (float)ProgramSetting.Instance.GetScreenSize.X / ProgramSetting.Instance.GetScreenSize.Y);
+        (float)width / height);
 
       Input.Instance.AddKeyBordBindings();
+      Light.Instance.Init(new Vector2D<int>(width, height));
 
       AddAllScene();
       ActivateScene();
@@ -70,19 +76,18 @@ namespace SAE.GPR5300.S1.Core {
     }
 
     private void AddAllScene() {
-      SceneManager.Instance.AddScene(new MainMenuScene(SceneName.MainMenu));
-      SceneManager.Instance.AddScene(new P8Scene(SceneName.P8));
-      SceneManager.Instance.AddScene(new P9Scene(SceneName.P9));
-      SceneManager.Instance.AddScene(new ReflectionScene(SceneName.Reflection));
-      SceneManager.Instance.AddScene(new BlinnPhongLightingScene(SceneName.BlinnPhongLighting));
-      SceneManager.Instance.AddScene(new LightOptions(SceneName.LightOptions));
-      SceneManager.Instance.AddScene(new SolarSystemScene(SceneName.SolarSystem));
-      SceneManager.Instance.AddScene(new TestScene(SceneName.Test));
+      SceneManager.Instance.AddScene(new MainMenuScene());
+      SceneManager.Instance.AddScene(new SolarSystemScene());
+      SceneManager.Instance.AddScene(new ReflectionScene());
+      SceneManager.Instance.AddScene(new WorldMapScene());
+      SceneManager.Instance.AddScene(new BlinnPhongLightingScene());
     }
 
     private void OnUpdate(double deltaTime) {
       _time.UpdateDeltaTime(deltaTime);
       Input.Instance.UpdateCamMove();
+      Light.Instance.Update();
+      UiController.Instance.ImGuiController.Update(Time.DeltaTime);
       SceneManager.Instance
         .GetActiveScene()
         .UpdateScene();
@@ -92,14 +97,15 @@ namespace SAE.GPR5300.S1.Core {
       Gl.Enable(EnableCap.DepthTest);
       Gl.DepthMask(true);
       Gl.Clear((uint)(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit));
-      UiController.Instance.ImGuiController.Update(Time.DeltaTime);
       SceneManager.Instance
         .GetActiveScene()
         .RenderScene();
+      UiController.Instance.ImGuiController.Render();
     }
 
     private void OnResize(Vector2D<int> size) {
       Camera.Instance.AspectRatio = (float)size.X / size.Y;
+      Light.Instance.ViewSize(size);
       Gl.Viewport(size);
       ProgramSetting.Instance.SetSize(size);
     }

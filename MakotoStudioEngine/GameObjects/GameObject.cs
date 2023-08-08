@@ -14,9 +14,8 @@ namespace MSE.Engine.GameObjects {
       Transform = new Transform();
     }
 
-    public abstract void OnLoad();
-    public abstract unsafe void UpdateGameObject();
+    public abstract void UpdateGameObject();
 
-    public abstract unsafe void RenderGameObject();
+    public abstract void RenderGameObject();
   }
 }

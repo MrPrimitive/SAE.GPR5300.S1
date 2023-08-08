@@ -1,4 +1,7 @@
-﻿using MSE.Engine.Core;
+﻿using System.Drawing;
+using System.Numerics;
+using MSE.Engine.Core;
+using MSE.Engine.GameObjects;
 using MSE.Engine.Interfaces;
 using MSE.Engine.Scenes;
 using SAE.GPR5300.S1.Assets.GameObjects.Demos;
@@ -9,22 +12,29 @@ using SAE.GPR5300.S1.Core;
 using SAE.GPR5300.S1.Ui;
 
 namespace SAE.GPR5300.S1.Assets.Scenes {
-  public class BlinnPhongLightingScene : Scene, IScene {
+  public class WorldMapScene : Scene, IScene {
     private bool _instantiate;
 
-    public BlinnPhongLightingScene() : base(SceneName.BlinnPhongLighting, "Blinn | Blinn Phone Example Light Scene") { }
+    public WorldMapScene() : base(SceneName.WorldMap, "World map with a normal map to show the mountains and valleys") {
+    }
 
     public new void LoadScene() {
+      Camera.Instance.Position = new Vector3(0f, 0f, 50f);
       if (_instantiate)
         return;
 
-      SetSkyBox(new SkyBox(Game.Instance.Gl,
+      var skyBox = new SkyBox(Game.Instance.Gl,
         TextureFileName.TexSkyBoxDesert,
         StandardMaterial.Instance.Material,
-        SkyBoxModel.Instance));
-      AddGameObject(new BlinnPhongLightingPlane());
+        SkyBoxModel.Instance) {
+        Color = Color.DarkGray
+      };
+      SetSkyBox(skyBox);
+
+      AddGameObject(new WorldMapPlane());
       AddUi(UiSceneManager.Instance);
-      AddUi(new UiBlinnPhongLightingScene());
+      AddUi(new UiWorldMap());
+
       _instantiate = true;
     }
 

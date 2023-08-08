@@ -7,29 +7,29 @@ using SAE.GPR5300.S1.Settings;
 using Silk.NET.OpenGL.Extensions.ImGui;
 
 namespace SAE.GPR5300.S1.Ui {
-  public class UiSceneManager : IUiSceneManager {
+  public class UiSceneManager : IUserSceneManager {
     private ImGuiController _controller;
 
     public static UiSceneManager Instance => Lazy.Value;
     private static readonly Lazy<UiSceneManager> Lazy = new(() => new ());
 
-    public UiSceneManager() {
+    private UiSceneManager() {
       _controller = UiController.Instance.ImGuiController;
     }
 
     public void UpdateUi() {
-      ImGui.SetNextWindowPos(new Vector2(ProgramSetting.Instance.GetScreenSize.X - 400, 0));
+      ImGui.SetNextWindowPos(new Vector2(ProgramSetting.Instance.GetScreenSize.X - 300, 0));
 
       ImGui.Begin("SceneManager");
       ImGui.Text($"Current Scene: {SceneManager.Instance.GetActiveScene().GetSceneName()}");
       ImGui.Text($"Available Scenes: {SceneManager.Instance.Scenes.Count}");
       foreach (var scene in SceneManager.Instance.Scenes
                  .Where(scene => !SceneManager.Instance.GetActiveScene().GetSceneName().Equals(scene.GetSceneName()))
-                 .Where(scene => ImGui.Button($"{scene.GetSceneName()}", new Vector2(385, 50)))) {
+                 .Where(scene => ImGui.Button($"{scene.GetSceneName()}", new Vector2(285, 20)))) {
         SceneManager.Instance.LoadScene(scene);
       }
 
-      if (ImGui.Button($"CLOSE GAME", new Vector2(385, 50))) {
+      if (ImGui.Button($"CLOSE GAME", new Vector2(285, 50))) {
         Game.Instance.GameWindow.Close();
       }
 

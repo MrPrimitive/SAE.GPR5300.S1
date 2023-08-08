@@ -12,7 +12,7 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
   public class ReflectionScene : Scene, IScene {
     private bool _instantiate;
 
-    public ReflectionScene(string sceneName) : base(sceneName) {
+    public ReflectionScene() : base(SceneName.Reflection, "Example of a reflection - NOTE: (Load this scene before \"World Map - Scene\" or restart the application).") {
     }
 
     public new void LoadScene() {
@@ -21,21 +21,15 @@ namespace SAE.GPR5300.S1.Assets.Scenes {
 
       SetSkyBox(new SkyCubeBox(Game.Instance.Gl,
         TextureFileName.TexSkyBoxCubeWaterMountain,
-        // TextureFileName.TexSkyBoxCubeAnime,
         SkyCubeBoxMaterial.Instance.Material,
         CubeModel.Instance));
-      AddGameObject(new ReflectionDodecahedron());
-      AddUi(new UiSceneManager());
+      AddGameObject(new ReflectionCube());
+      AddUi(UiSceneManager.Instance);
       _instantiate = true;
     }
 
-    public new void UnLoad() {
+    public new void Unload() {
       base.Unload();
-      _instantiate = false;
-    }
-
-    public new void Dispose() {
-      base.Dispose();
     }
   }
 }

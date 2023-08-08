@@ -27,7 +27,6 @@ namespace MSE.Engine.GameObjects {
 
     public void BindCubeMap() {
       _vertexArrayObject.Bind();
-      Textures[0].BindCubeMap();
     }
 
     public void Dispose() {

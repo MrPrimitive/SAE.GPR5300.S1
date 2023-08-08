@@ -24,10 +24,6 @@
         <ModelsSourceFiles Include="Resources/Models/**/*.*" />
     </ItemGroup>
     
-    <ItemGroup>
-      <Folder Include="Extensions\Shaders\" />
-    </ItemGroup>
-    
     <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
         <Copy SourceFiles="appsettings.json" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
         <Copy SourceFiles="@(ShadersSourceFiles)" DestinationFolder="$(OutDir)\shaders" SkipUnchangedFiles="true" />

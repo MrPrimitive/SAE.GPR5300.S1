@@ -3,14 +3,14 @@ using ImGuiNET;
 using MSE.Engine.Interfaces;
 
 namespace SAE.GPR5300.S1.Ui {
-  public class UITest : IUiInterface {
+  public class UiTest : IUserInterface {
     private bool _isColor;
     private bool _isTexture;
     private float _alpha;
     private Vector3 _colorValue;
     private Vector3 _scaleValue;
 
-    public UITest() {
+    public UiTest() {
     }
 
     public void LoadDemoWindow() {

@@ -5,15 +5,14 @@ in vec2 fTexCoords;
 
 struct Material {
     sampler2D diffuse;
-    sampler2D specular;
-    float shininess;
+    sampler2D diffuseNightLight;
 };
 
 struct Light {
     vec3 position;
     vec3 ambient;
     vec3 diffuse;
-    vec3 specular;
+    vec3 diffuseNight;
 };
 
 uniform Material material;
@@ -24,15 +23,17 @@ out vec4 FragColor;
 
 void main()
 {
-    vec3 ambient = light.ambient * texture(material.diffuse, fTexCoords).rgb;
     vec3 normal = normalize(fNormal);
+
+    vec3 ambient = light.ambient * texture(material.diffuse, fTexCoords).rgb;
+
     vec3 lightDirection = normalize(light.position - fPos);
     float diff = max(dot(normal, lightDirection), 0.0);
     vec3 diffuse = light.diffuse * (diff * texture(material.diffuse, fTexCoords).rgb);
-    vec3 viewDirection = normalize(viewPos - fPos);
-    vec3 reflectDirection = reflect(-lightDirection, normal);
-    float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), material.shininess);
-    vec3 specular = light.specular * (spec * texture(material.specular, fTexCoords).rgb);
-    vec3 result = ambient + diffuse + specular;
+
+    diff = max(dot(normal, -lightDirection), 0.0);
+    vec3 diffuseNight = light.diffuseNight * (diff * texture(material.diffuseNightLight, fTexCoords).rgb);
+
+    vec3 result = ambient + (diffuse + diffuseNight);
     FragColor = vec4(result, 1.0);
 }
