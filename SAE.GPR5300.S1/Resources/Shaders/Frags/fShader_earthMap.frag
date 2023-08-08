@@ -28,7 +28,7 @@ void main()
         normal = texture(material.normalMap, fTexCoords).rgb;
         normal = normalize(normal * 2.0 - 1.0);
     } else {
-        vec3 normal = normalize(fNormal);
+        normal = normalize(fNormal);
     }
 
     vec3 ambient = light.ambient * texture(material.diffuse, fTexCoords).rgb;
