@@ -26,12 +26,11 @@ namespace SAE.GPR5300.S1.Core {
         WindowState = ProgramSetting.Instance.ProgramConfig.WindowState,
         WindowBorder = ProgramSetting.Instance.ProgramConfig.WindowBorder,
       };
-      if (ProgramSetting.Instance.IsFullScreen) {
+      if (ProgramSetting.Instance.IsFullScreen)
         _windowOptions = _windowOptions with {
           WindowState = WindowState.Fullscreen,
           WindowBorder = WindowBorder.Hidden,
         };
-      }
     }
 
     public void Run() {
@@ -49,29 +48,20 @@ namespace SAE.GPR5300.S1.Core {
       Gl = GameWindow.CreateOpenGL();
       ProgramSetting.Instance.SetSize(GameWindow.Size.X, GameWindow.Size.Y);
       Gl.PolygonMode(TriangleFace.Back, PolygonMode.Fill);
-      if (ProgramSetting.Instance.IsFullScreen) {
+      if (ProgramSetting.Instance.IsFullScreen)
         Gl.Viewport(ProgramSetting.Instance.GetScreenSize);
-      }
-
-      
 
       int width = ProgramSetting.Instance.GetScreenSize.X;
       int height = ProgramSetting.Instance.GetScreenSize.Y;
-
       Camera.Instance.SetUp(Vector3.UnitZ * 50,
         Vector3.UnitZ * -1,
         Vector3.UnitY,
         (float)width / height);
-
       Input.Instance.AddKeyBordBindings();
       Light.Instance.Init(new Vector2D<int>(width, height));
 
       AddAllScene();
       ActivateScene();
-    }
-
-    private void ActivateScene() {
-      SceneManager.Instance.SetSceneActive(SceneName.MainMenu);
     }
 
     private void AddAllScene() {
@@ -109,8 +99,8 @@ namespace SAE.GPR5300.S1.Core {
       ProgramSetting.Instance.SetSize(size);
     }
 
-    private void OnClose() {
-      Gl.Dispose();
-    }
+    private void ActivateScene() => SceneManager.Instance.SetSceneActive(SceneName.MainMenu);
+
+    private void OnClose() => Gl.Dispose();
   }
 }
