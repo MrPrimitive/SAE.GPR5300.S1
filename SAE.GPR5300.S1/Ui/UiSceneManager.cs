@@ -38,6 +38,16 @@ namespace SAE.GPR5300.S1.Ui {
       if (ImGui.Button("Switch to Fullscreen")) {
         ProgramSetting.Instance.SetFullScreen();
       }
+      
+      ImGui.Spacing();
+      ImGui.Spacing();
+      ImGui.Text("Key: I");
+      ImGui.TextWrapped("Switch between insert mode and cam mode");
+      ImGui.Spacing();
+      ImGui.Text("Ket: W / A / S / D");
+      ImGui.TextWrapped("Move In world space");
+      ImGui.Spacing();
+      
 
       ImGui.End();
     }

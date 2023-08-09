@@ -13,7 +13,7 @@ namespace SAE.GPR5300.S1.Ui {
     public void UpdateUi() {
       ImGui.SetNextWindowPos(new Vector2(
         ProgramSetting.Instance.GetScreenSize.X / 2 - 200,
-        ProgramSetting.Instance.GetScreenSize.Y / 2 - 200));
+        ProgramSetting.Instance.GetScreenSize.Y / 2 - 250));
       ImGui.SetNextWindowSize(new Vector2(400, 400));
       ImGui.Begin("Mein Menu", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoTitleBar);
       foreach (var scene in SceneManager.Instance.Scenes.Where(scene => !scene.GetSceneName().Equals(SceneName.MainMenu))) {
@@ -21,7 +21,16 @@ namespace SAE.GPR5300.S1.Ui {
           SceneManager.Instance.LoadScene(scene);
         ImGui.TextWrapped($"{scene.GetDescription()}");
       }
-
+      ImGui.Spacing();
+      ImGui.Spacing();
+      ImGui.Text("Key: I");
+      ImGui.TextWrapped("Switch between insert mode and cam mode");
+      ImGui.Spacing();
+      ImGui.Text("Key: W / A / S / D");
+      ImGui.TextWrapped("Move In world space");
+      ImGui.Spacing();
+      ImGui.Text("Key: SHIFT");
+      ImGui.TextWrapped("Increase move speed");
       ImGui.Spacing();
       ImGui.Spacing();
       ImGui.TextWrapped(

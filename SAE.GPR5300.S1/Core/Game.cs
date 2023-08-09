@@ -14,7 +14,6 @@ namespace SAE.GPR5300.S1.Core {
     public IWindow GameWindow { get; private set; } = null!;
     public GL Gl { get; private set; } = null!;
     private static readonly Lazy<Game> Lazy = new(() => new Game());
-
     private readonly WindowOptions _windowOptions = WindowOptions.Default;
     private Time _time;
 
@@ -61,7 +60,7 @@ namespace SAE.GPR5300.S1.Core {
       Light.Instance.Init(new Vector2D<int>(width, height));
 
       AddAllScene();
-      ActivateScene();
+      SceneManager.Instance.SetSceneActive(SceneName.MainMenu);
     }
 
     private void AddAllScene() {
@@ -98,8 +97,6 @@ namespace SAE.GPR5300.S1.Core {
       Gl.Viewport(size);
       ProgramSetting.Instance.SetSize(size);
     }
-
-    private void ActivateScene() => SceneManager.Instance.SetSceneActive(SceneName.MainMenu);
 
     private void OnClose() => Gl.Dispose();
   }

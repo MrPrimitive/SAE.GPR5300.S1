@@ -27,7 +27,7 @@ namespace SAE.GPR5300.S1.Ui.SolarSystemUi {
         SolarSystemMultiplierEvent?.Invoke(_solarSystemMultiplier);
       }
 
-      if (ImGui.Button("Set Real", new Vector2(285, 20))) {
+      if (ImGui.Button("Set Slow", new Vector2(285, 20))) {
         _solarSystemMultiplier = 0.02f;
         SolarSystemMultiplierEvent?.Invoke(_solarSystemMultiplier);
       }

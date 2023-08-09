@@ -35,10 +35,7 @@ namespace MSE.Engine.Core {
 
     public void LoadScene(IScene scene) {
       Console.WriteLine($"Try Load Scene {scene.GetSceneName()}");
-
-      // TODO: Unload current active scene
       var currentScene = Instance.GetActiveScene();
-
       Camera.Instance.Position = new Vector3(0, 0, 50f);
       Camera.Instance.Front = Vector3.UnitZ * -1;
       scene.LoadScene();
