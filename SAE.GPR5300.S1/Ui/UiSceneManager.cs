@@ -11,7 +11,7 @@ namespace SAE.GPR5300.S1.Ui {
     private ImGuiController _controller;
 
     public static UiSceneManager Instance => Lazy.Value;
-    private static readonly Lazy<UiSceneManager> Lazy = new(() => new ());
+    private static readonly Lazy<UiSceneManager> Lazy = new(() => new());
 
     private UiSceneManager() {
       _controller = UiController.Instance.ImGuiController;
@@ -38,17 +38,18 @@ namespace SAE.GPR5300.S1.Ui {
       if (ImGui.Button("Switch to Fullscreen")) {
         ProgramSetting.Instance.SetFullScreen();
       }
-      
+
       ImGui.Spacing();
       ImGui.Spacing();
       ImGui.Text("Key: I");
       ImGui.TextWrapped("Switch between insert mode and cam mode");
       ImGui.Spacing();
-      ImGui.Text("Ket: W / A / S / D");
+      ImGui.Text("Key: W / A / S / D");
       ImGui.TextWrapped("Move In world space");
       ImGui.Spacing();
+      ImGui.Text("Key: SHIFT");
+      ImGui.TextWrapped("Increase move speed");
       
-
       ImGui.End();
     }
 
