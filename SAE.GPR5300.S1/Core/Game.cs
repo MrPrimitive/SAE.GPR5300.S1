@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using ImGuiNET;
 using MSE.Engine.Core;
 using MSE.Engine.GameObjects;
 using SAE.GPR5300.S1.Assets.Scenes;
