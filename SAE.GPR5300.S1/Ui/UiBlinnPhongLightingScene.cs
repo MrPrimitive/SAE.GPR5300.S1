@@ -9,29 +9,29 @@ namespace SAE.GPR5300.S1.Ui {
     private bool _isBlinnChecked;
     private bool _isGammaChecked;
 
-    public static Action<bool> IsBlinnEvent;
-    public static Action<bool> IsGammaEvent;
-    public static Action<float> ExponentBlinnEvent;
-    public static Action<float> ExponentPhongEvent;
+    public static Action<bool>? IsBlinnEvent;
+    public static Action<bool>? IsGammaEvent;
+    public static Action<float>? ExponentBlinnEvent;
+    public static Action<float>? ExponentPhongEvent;
 
     public void UpdateUi() {
       ImGui.SetNextWindowPos(new Vector2(0,0));
       ImGui.SetNextWindowSize(new Vector2(350,125));
       ImGui.Begin("Shader Setting", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
       if (ImGui.Checkbox("Us Blinn Light", ref _isBlinnChecked)) {
-        IsBlinnEvent.Invoke(_isBlinnChecked);
+        IsBlinnEvent?.Invoke(_isBlinnChecked);
       }
       
       if (ImGui.Checkbox("Us Gamma", ref _isGammaChecked)) {
-        IsGammaEvent.Invoke(_isGammaChecked);
+        IsGammaEvent?.Invoke(_isGammaChecked);
       }
 
       if (ImGui.SliderFloat("Exponent Blinn", ref _exponentBlinn, 0, 100)) {
-        ExponentBlinnEvent.Invoke(_exponentBlinn);
+        ExponentBlinnEvent?.Invoke(_exponentBlinn);
       }
 
       if (ImGui.SliderFloat("Exponent Phong", ref _exponentPhong, 0, 100)) {
-        ExponentPhongEvent.Invoke(_exponentPhong);
+        ExponentPhongEvent?.Invoke(_exponentPhong);
       }
 
       ImGui.End();
