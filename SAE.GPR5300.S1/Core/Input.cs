@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Numerics;
+﻿using System.Numerics;
 using MSE.Engine.Core;
 using MSE.Engine.GameObjects;
-using SAE.GPR5300.S1.Core;
 using Silk.NET.Input;
 
-namespace SAE.GPR5300.S1.Ui {
+namespace SAE.GPR5300.S1.Core {
   public class Input {
     public static Input Instance => Lazy.Value;
     public IInputContext InputContext => _inputContext;

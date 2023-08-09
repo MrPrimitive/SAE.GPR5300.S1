@@ -1,10 +1,8 @@
 ﻿namespace SAE.GPR5300.S1.Assets.Textures {
   public static class TextureFileName {
     // SkyBox
-    public static readonly string TexSkyBoxAnime = "tex_skybox_anime.jpg";
     public static readonly string TexSkyBoxSpace = "tex_skybox_space.jpg";
     public static readonly string TexSkyBoxDesert = "tex_skybox_desert.jpg";
-    public static readonly string TexSkyBoxWater = "tex_skybox_water.jpg";
 
     // SkyBox Cube
     public static readonly List<string> TexSkyBoxCubeWaterMountain = new() {
@@ -27,7 +25,6 @@
     public static readonly string TexMars = "tex_mars.jpg";
 
     // Standard Textures
-    public static readonly string TexStandardCrate = "tex_s_crate.jpg";
     public static readonly string TexStandardWood = "tex_s_wood.jpg";
   }
 }

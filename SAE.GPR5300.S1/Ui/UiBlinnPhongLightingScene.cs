@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using System.Numerics;
+using ImGuiNET;
 using MSE.Engine.Interfaces;
 
 namespace SAE.GPR5300.S1.Ui {
@@ -14,6 +15,8 @@ namespace SAE.GPR5300.S1.Ui {
     public static Action<float> ExponentPhongEvent;
 
     public void UpdateUi() {
+      ImGui.SetNextWindowPos(new Vector2(0,0));
+      ImGui.SetNextWindowSize(new Vector2(350,125));
       ImGui.Begin("Shader Setting", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
       if (ImGui.Checkbox("Us Blinn Light", ref _isBlinnChecked)) {
         IsBlinnEvent.Invoke(_isBlinnChecked);
